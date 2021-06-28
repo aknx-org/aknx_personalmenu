@@ -90,9 +90,28 @@ Citizen.CreateThread(function()
                 for _,v in pairs(GetActivePlayers()) do
                     local otherPed = GetPlayerPed(v);
                         if #(pCoords - GetEntityCoords(otherPed, false)) < 250.0 then
-                            self.gamerTags[v] = CreateFakeMpGamerTag(otherPed, "["..GetPlayerServerId(v).."] - "..GetPlayerName(v), true, false, '', 2);
+                            self.gamerTags[v] = CreateFakeMpGamerTag(otherPed, "["..GetPlayerServerId(v).."] - "..GetPlayerName(v), true, false, '', 0);
+							SetMpGamerTagAlpha(self.gamerTags[v], 0, 255);
 							SetMpGamerTagAlpha(self.gamerTags[v], 2, 255);
+							SetMpGamerTagAlpha(self.gamerTags[v], 4, 255);
+							SetMpGamerTagAlpha(self.gamerTags[v], 7, 255);
+							SetMpGamerTagVisibility(self.gamerTags[v], 0, true);
 							SetMpGamerTagVisibility(self.gamerTags[v], 2, true);
+							SetMpGamerTagVisibility(self.gamerTags[v], 4, NetworkIsPlayerTalking(v));
+							SetMpGamerTagVisibility(self.gamerTags[v], 7, DecorExistOn(otherPed, "staff1") and DecorGetInt(otherPed, "staff1") > 0);
+							SetMpGamerTagColour(self.gamerTags[v], 7, 55)
+							if NetworkIsPlayerTalking(otherPed) then
+								SetMpGamerTagHealthBarColour(self.gamerTags[v], 211)
+								SetMpGamerTagColour(self.gamerTags[v], 4, 211)
+								SetMpGamerTagColour(self.gamerTags[v], 0, 211)
+							else
+								SetMpGamerTagHealthBarColour(self.gamerTags[v], 0)
+								SetMpGamerTagColour(self.gamerTags[v], 4, 0)
+								SetMpGamerTagColour(self.gamerTags[v], 0, 0)
+							end
+							if DecorExistOn(otherPed, "staff1") then
+								SetMpGamerTagWantedLevel(otherPed, DecorGetInt(otherPed, "staff1"))
+							end
 						else
 							RemoveMpGamerTag(self.gamerTags[v]);
                             self.gamerTags[v] = nil;

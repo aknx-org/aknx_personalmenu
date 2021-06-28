@@ -437,7 +437,7 @@ function openPersonalMenu()
                     RageUI.ButtonWithStyle(Config.RefreshBillingButtonTitle, nil, {RightLabel = "→→"}, true, function(_,_,s)
                         if s then
                             ESX.TriggerServerCallback('esx_billing:getBills', function(bills)
-                                billing = bills;
+                                self.billing_table = bills;
                             end)
                         end
                     end)
@@ -1136,7 +1136,7 @@ function openPersonalMenu()
                                 if s then
                                     local quantity = KeyboardInput("Quantité d\'argent en cash à se give :", "", 100);
                                     if (tonumber(quantity)) then
-                                        TriggerServerEvent('esx_personalmenu:giveMoneyCash', tonumber(quantity))
+                                        TriggerServerEvent('esx_personalmenu:giveMoneyCash', tonumber(quantity));
                                     else
                                         ESX.ShowNotification("~r~Les champs sont incorrect !", true, true, 50);
                                     end
@@ -1146,7 +1146,7 @@ function openPersonalMenu()
                                     if s then
                                         local quantity = KeyboardInput("Quantité d\'argent en banque à se give :", "", 100);
                                         if (tonumber(quantity)) then
-                                            TriggerServerEvent('esx_personalmenu:giveMoneyBank', tonumber(quantity))
+                                            TriggerServerEvent('esx_personalmenu:giveMoneyBank', tonumber(quantity));
                                         else
                                             ESX.ShowNotification("~r~Les champs sont incorrect !", true, true, 50);
                                         end
@@ -1156,7 +1156,7 @@ function openPersonalMenu()
                                         if s then
                                             local quantity = KeyboardInput("Quantité d\'argent sale à se give :", "", 100);
                                             if (tonumber(quantity)) then
-                                                TriggerServerEvent('esx_personalmenu:giveBlackMoney', tonumber(quantity))
+                                                TriggerServerEvent('esx_personalmenu:giveBlackMoney', tonumber(quantity));
                                             else
                                                 ESX.ShowNotification("~r~Les champs sont incorrect !", true, true, 50);
                                             end
@@ -1167,10 +1167,27 @@ function openPersonalMenu()
                         end
                     end)
                     RageUI.Separator("↓ Affichage ↓");
-                
+                    RageUI.Checkbox("Afficher les Noms", nil, self.showNames, {},function(_,_,s,c)
+						if s then
+							self.showNames = c;
+							if c then
+								self.showNames = true;
+							else
+								self.showNames = false;
+							end
+						end
+					end)
+                    RageUI.ButtonWithStyle("Print les coordoonnées", nil, {RightLabel = "→→"}, true, function(_,_,s)
+                        if s then
+                            local pCoords = GetEntityCoords(PlayerPedId());
+                            local pHeading = GetEntityHeading(PlayerPedId());
+                            print(json.encode(pCoords)..", heading : "..pHeading);
+                        end
+                    end);
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'admin_menu_vehicles'), true, true, true, function()
+
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'admin_menu_list'), true, true, true, function()
