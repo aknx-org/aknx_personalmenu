@@ -5,27 +5,27 @@ self = {
     black_money       = nil,
     billing_table = {},
     headClothesIndex  = 1,
-    clothesHeadList   = { "Chapeau/Casque", "Masque", "Oreilles", "Lunettes" },
+    clothesHeadList   = { "Helmet", "Mask", "Ears", "Glasses" },
     hightClothesIndex = 1,
-    clothesHightList  = { "Haut", "Gilet Par Balles", "Sac", "Bras", "Montre", "Bracelet", "Chaines", "Calques" },
+    clothesHightList  = { "Upper", "Bullet proof", "Bags", "Arms", "Watches", "Bracelets", "Chains", "Decals" },
     downClothesIndex  = 1,
-    clothesDownList   = { "Pantalon", "Chaussures" },
+    clothesDownList   = { "Pants", "Shoes" },
     windowVehIndex = 1,
-    windowVehList = { "Ouvrir", "Fermer" },
+    windowVehList = { "Open", "Close" },
     doorStatusIndex = 1,
-    doorStatusList = { "Ouvrir", "Fermer" },
+    doorStatusList = { "Open", "Close" },
     doorOpenIndex = 1,
-    doorOpenList = { "Avant Droit", "Avant Gauche", "Arrière Droit", "Arrière Gauche" },
+    doorOpenList = { "Right front", "Left front", "Right Back", "Right left" },
     doorCloseIndex = 1,
-    doorCloseList = { "Avant Droit", "Avant Gauche", "Arrière Droit", "Arrière Gauche" },
+    doorCloseList = { "Right front", "Left front", "Right Back", "Right left" },
     hoodVehIndex = 1,
-    hoodVehList = { "Ouvrir", "Fermer" },
+    hoodVehList = { "Open", "Close" },
     trunkVehIndex = 1,
-    trunkVehList = { "Ouvrir", "Fermer" },
+    trunkVehList = { "Open", "Close" },
     societyIndex = 1,
-    societyList = { '~g~Recruter~s~', '~g~Promouvoir~s~', '~r~Destituer~s~', '~r~Virer~s~' },
+    societyList = { '~g~Recruit~s~', '~g~Promote~s~', '~r~Remove~s~', '~r~Dismissed~s~' },
     societyIndex2 = 1,
-    societyList2 = { '~g~Recruter~s~', '~g~Promouvoir~s~', '~r~Destituer~s~', '~r~Virer~s~' },
+    societyList2 = { '~g~Recruit~s~', '~g~Promote~s~', '~r~Remove~s~', '~r~Dismissed~s~' },
     InStaff = false,
     playersList = {},
     playersInZone = false,
@@ -35,13 +35,13 @@ self = {
     noclipCollision = false,
     ghostMod = false,
     tpIndex = 1,
-    tpList = { "Tp joueur sur soi", "Tp sur joueur", "Tp sur marker" },
+    tpList = { "Tp player on me", "Tp at player", "Tp on marker" },
     giveIndex = 1,
-    giveList = { "Cash", "Banque", "Sale" },
+    giveList = { "Cash", "Bank", "Black" },
     showNames = false,
     gamerTags = {},
     vehicleAdminIndex = 1,
-    vehicleAdminList = {"Spawn un véhicule", "Réparer le véhicule", "Retourner le véhicule" },
+    vehicleAdminList = {"Spawn an vehicle", "Fix the vehicle", "Return the vehicle" },
 };
 
 openF5Menu = false;
@@ -75,10 +75,10 @@ function openPersonalMenu()
         openF5Menu = false
     else
         openF5Menu = true
-        RageUI.Visible(RMenu:Get('personal_menu', 'main_menu'), true)
+        RageUI.Visible(RMenu:Get('personal_menu', 'main_menu'), true);
         Citizen.CreateThread(function()
             while openF5Menu do
-                Citizen.Wait(1)
+                Citizen.Wait(1);
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'main_menu'), true, true, true, function()
                     if Config.EnableInventory then
                         RageUI.ButtonWithStyle(Traduction.InventoryButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
@@ -128,9 +128,8 @@ function openPersonalMenu()
                             end)
                         end
                     end
-                    --> @TODO FAIRE LE JOB 2
                     if Config.EnableSociety then
-                        if ESX.PlayerData.job.grade_name == 'boss' then
+                        if ESX.PlayerData.job.grade_name == 'boss' or ESX.PlayerData.job2.grade_name == 'boss' then
                             RageUI.ButtonWithStyle(Traduction.SocietyButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                                 if s then
                                 end
@@ -182,7 +181,7 @@ function openPersonalMenu()
                             PlayerMarker();
                         end
                         if s then
-                            local quantity = KeyboardInput('Quantité de '..self.itemSelected.label..' à donner :', "", 25);
+                            local quantity = KeyboardInput('Quantity of'..self.itemSelected.label..' to send :', "", 25);
                             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                             if tonumber(quantity) then
                                 if closestDistance ~= -1 and closestDistance <= 3 then
@@ -207,7 +206,7 @@ function openPersonalMenu()
                     if Config.CanDropItem then
                         RageUI.ButtonWithStyle(Traduction.DropButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                             if s then
-                                local quantity = KeyboardInput('Quantité de '..self.itemSelected.label..' à jeter :', "", 25);
+                                local quantity = KeyboardInput('Quantity of '..self.itemSelected.label..' to drop :', "", 25);
                                 if tonumber(quantity) then
                                     if IsPedOnFoot(PlayerPedId()) then
                                         TriggerServerEvent('esx:removeInventoryItem', 'item_standard', self.itemSelected.name, tonumber(quantity));
@@ -265,7 +264,7 @@ function openPersonalMenu()
                             PlayerMarker();
                         end
                         if s then
-                            local quantity = KeyboardInput('Quantité de munitions de '..self.weaponSelected.label..' à donner :', "", 25);
+                            local quantity = KeyboardInput('Ammos quantity of '..self.weaponSelected.label..' to send :', "", 25);
                             if tonumber(quantity) then
                                 local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                                 if closestDistance ~= -1 and closestDistance <= 3 then
@@ -313,9 +312,9 @@ function openPersonalMenu()
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'wallet_menu'), true, true, true, function()
                     RageUI.Separator(Traduction.JobSeparatorTitle);
                     RageUI.Separator(ESX.PlayerData.job.label.. " - " ..ESX.PlayerData.job.grade_label);
-                    -- @TODO --> if config job2 jsp koi then
-                    -- RageUI.Separator(ESX.PlayerData.job2.label.. " - " ..ESX.PlayerData.job2.grade_label)
-                    -- end
+                    if Config.EnableDoubleJob then
+                        RageUI.Separator(ESX.PlayerData.job2.label.. " - " ..ESX.PlayerData.job2.grade_label)
+                    end
                     RageUI.Separator(Traduction.InformationsWalletSeparatorTitle);
                     RageUI.ButtonWithStyle(Traduction.ShowIdentityCardButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if s then
@@ -1019,6 +1018,74 @@ function openPersonalMenu()
                         RageUI.Separator(Traduction.MoneyLegalSocietySeparator)
                         RageUI.ButtonWithStyle(Traduction.MoneyLegalSocietyButton, nil, { RightLabel = "~g~"..societymoney.."$" }, true,function(h,a,s)
                         end)
+                    end
+                    if Config.EnableDoubleJob then
+                        if ESX.PlayerData.job2.grade_name == 'boss' then
+                            RageUI.Separator(Traduction.MoneyIllegalSocietySeparator)
+                            RageUI.List(Traduction.ActionsIllegalSocietyTitle, self.societyList, self.societyIndex, nil, {}, true, function(_,a,s,i)
+                                self.societyIndex = i;
+                                if a then
+                                    if i == 1 then
+                                        if a then
+                                            PlayerMarker();
+                                        end
+                                        if s then
+                                            local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
+                                            if closestPlayer == -1 or closestDistance > 3.0 then
+                                                ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
+                                            else
+                                                TriggerServerEvent('esx_personalmenu:societyRecrutePlayer2', GetPlayerServerId(closestPlayer), ESX.PlayerData.job2.name, 0);
+                                            end
+                                        end
+                                    else
+                                        if i == 2 then
+                                            if a then
+                                                PlayerMarker();
+                                            end
+                                            if s then
+                                                local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
+                                                if closestPlayer == -1 or closestDistance > 3.0 then
+                                                    ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
+                                                else
+                                                    TriggerServerEvent('esx_personalmenu:societyPromotePlayer2', GetPlayerServerId(closestPlayer));
+                                                end
+                                            end
+                                        else
+                                            if i == 3 then
+                                                if a then
+                                                    PlayerMarker();
+                                                end
+                                                if s then
+                                                    local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
+                                                    if closestPlayer == -1 or closestDistance > 3.0 then
+                                                        ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
+                                                    else
+                                                        TriggerServerEvent('esx_personalmenu:societyRemovePlayer2', GetPlayerServerId(closestPlayer));
+                                                    end
+                                                end
+                                            else
+                                                if i == 4 then
+                                                    if a then
+                                                        PlayerMarker();
+                                                    end
+                                                    if s then
+                                                        local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+                                                        if closestPlayer == -1 or closestDistance > 3.0 then
+                                                            ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
+                                                        else
+                                                            TriggerServerEvent('esx_personalmenu:societyDemotePlayer2', GetPlayerServerId(closestPlayer));
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end)
+                            RageUI.Separator(Traduction.MoneyIllegalSocietySeparator)
+                            RageUI.ButtonWithStyle(Traduction.MoneyIllegalSocietyButton, nil, { RightLabel = "~g~"..societymoney2.."$" }, true,function(h,a,s)
+                            end)
+                        end
                     end
                 end)
                 

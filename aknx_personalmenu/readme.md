@@ -1,2 +1,0 @@
-- action donner (item & armes), argent et tout les dons
-- JOB2 a faire, avec config true/false

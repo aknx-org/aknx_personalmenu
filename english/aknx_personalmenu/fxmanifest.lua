@@ -6,7 +6,9 @@ discord 'A̴k̴a̴s̴h̴i̴#0001'
 
 shared_scripts {
     -- ↓ PersonalMenu Config ↓
-    'shared/config.lua'
+    'shared/config.lua',
+    -- ↓ PersonalMenu Config Traduction ↓
+    'traduction.lua'
 }
 
 client_scripts {
@@ -20,8 +22,6 @@ client_scripts {
     "RageUI_Source/client/menu/items/*.lua",
     "RageUI_Source/client/menu/panels/*.lua",
     "RageUI_Source/client/menu/windows/*.lua",
-    -- ↓ PersonalMenu Config Traduction ↓
-    'traduction.lua',
     -- ↓ PersonalMenu Client ↓
     'shared/commands.lua',
     'shared/keymapping.lua',

@@ -9,9 +9,13 @@ Citizen.CreateThread(function()
     end
     ESX.PlayerData = ESX.GetPlayerData();
     while ESX.GetPlayerData().job == nil do Citizen.Wait(10) end
-	--while ESX.GetPlayerData().job2 == nil do Citizen.Wait(10) end
+	if Config.EnableDoubleJob then
+		while ESX.GetPlayerData().job2 == nil do Citizen.Wait(10) end
+	end
     RefreshMoney();
-	RefreshMoney2();
+	if Config.EnableDoubleJob then
+		RefreshMoney2();
+	end
 	self.WeaponData = ESX.GetWeaponList();
 	for i = 1, #self.WeaponData, 1 do
 		if self.WeaponData[i].name == 'WEAPON_UNARMED' then
@@ -29,11 +33,13 @@ AddEventHandler('esx:setJob', function(job)
 	RefreshMoney();
 end)
 
-RegisterNetEvent('esx:setJob2')
-AddEventHandler('esx:setJob2', function(job2)
-	ESX.PlayerData.job2 = job2;
-	RefreshMoney2();
-end)
+if Config.EnableDoubleJob then
+	RegisterNetEvent('esx:setJob2')
+	AddEventHandler('esx:setJob2', function(job2)
+		ESX.PlayerData.job2 = job2;
+		RefreshMoney2();
+	end)
+end
 
 RegisterNetEvent('es:activateMoney')
 AddEventHandler('es:activateMoney', function(money)
@@ -47,15 +53,15 @@ end)
 
 RegisterNetEvent('esx_personalmenu:AddAmmoToPed')
 AddEventHandler('esx_personalmenu:AddAmmoToPed', function(value, quantity)
-	local weapon_hash = GetHashKey(value)
+	local weapon_hash = GetHashKey(value);
 	if HasPedGotWeapon(ped, weapon_hash, false) and value ~= 'WEAPON_UNARMED' then
-		AddAmmoToPed(ped, value, quantity)
+		AddAmmoToPed(ped, value, quantity);
 	end
 end)
 
 RegisterNetEvent("esx_personalmenu:playerListC")
 AddEventHandler("esx_personalmenu:playerListC", function(list)
-    self.playersList = list
+    self.playersList = list;
 end)
 
 -- admin
@@ -63,18 +69,17 @@ access_admin_menu = false
 local interval = 1000
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(interval)
+        Citizen.Wait(interval);
         if not openF5Menu then
-            interval = 1000
+            interval = 1000;
         else
-            interval = 15000
+            interval = 15000;
             ESX.TriggerServerCallback('esx_personalmenu:getGroupOfPlayer', function(pGroup)
-				pPerms = pGroup
+				pPerms = pGroup;
                 for k,v in pairs(Config.PermissionsForAdministration) do
-                    print(Config.PermissionsForAdministration[k])
                     if pGroup == Config.PermissionsForAdministration[k] then
-                        access_admin_menu = true
-                        return true
+                        access_admin_menu = true;
+                        return true;
                     end
                 end
             end)
@@ -91,9 +96,9 @@ Citizen.CreateThread(function()
 		else
 			interval = 0;
 			if Config.EnableGroupAdminMessage then
-			RageUI.Text({message = "~g~Administration activé\n~s~Rang : ~b~"..pPerms ,time_display = 1})
+			RageUI.Text({message = "~g~Administration activé\n~s~Rang : ~b~"..pPerms ,time_display = 1});
 			end
-            plyPed = PlayerPedId()
+            plyPed = PlayerPedId();
 			if self.showNames then
                 local pCoords = GetEntityCoords(PlayerPedId(), false);
                 for _,v in pairs(GetActivePlayers()) do
@@ -108,18 +113,18 @@ Citizen.CreateThread(function()
 							SetMpGamerTagVisibility(self.gamerTags[v], 2, true);
 							SetMpGamerTagVisibility(self.gamerTags[v], 4, NetworkIsPlayerTalking(v));
 							SetMpGamerTagVisibility(self.gamerTags[v], 7, DecorExistOn(otherPed, "staff1") and DecorGetInt(otherPed, "staff1") > 0);
-							SetMpGamerTagColour(self.gamerTags[v], 7, 55)
+							SetMpGamerTagColour(self.gamerTags[v], 7, 55);
 							if NetworkIsPlayerTalking(otherPed) then
-								SetMpGamerTagHealthBarColour(self.gamerTags[v], 211)
-								SetMpGamerTagColour(self.gamerTags[v], 4, 211)
-								SetMpGamerTagColour(self.gamerTags[v], 0, 211)
+								SetMpGamerTagHealthBarColour(self.gamerTags[v], 211);
+								SetMpGamerTagColour(self.gamerTags[v], 4, 211);
+								SetMpGamerTagColour(self.gamerTags[v], 0, 211);
 							else
-								SetMpGamerTagHealthBarColour(self.gamerTags[v], 0)
-								SetMpGamerTagColour(self.gamerTags[v], 4, 0)
-								SetMpGamerTagColour(self.gamerTags[v], 0, 0)
+								SetMpGamerTagHealthBarColour(self.gamerTags[v], 0);
+								SetMpGamerTagColour(self.gamerTags[v], 4, 0);
+								SetMpGamerTagColour(self.gamerTags[v], 0, 0);
 							end
 							if DecorExistOn(otherPed, "staff1") then
-								SetMpGamerTagWantedLevel(otherPed, DecorGetInt(otherPed, "staff1"))
+								SetMpGamerTagWantedLevel(otherPed, DecorGetInt(otherPed, "staff1"));
 							end
 						else
 							RemoveMpGamerTag(self.gamerTags[v]);

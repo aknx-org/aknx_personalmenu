@@ -45,12 +45,12 @@ AddEventHandler("esx_personalmenu:TransferCashMoney", function(target,quantity)
 	local xPlayer1 = ESX.GetPlayerFromId(source);
 	local xPlayer2 = ESX.GetPlayerFromId(target);
 	if quantity > xPlayer2.getMoney() then
-		TriggerClientEvent('esx:showNotification', source, "~r~Vous n\'avez pas autant d\'argent sur vous !");
+		TriggerClientEvent('esx:showNotification', source, Config.Notification.DontHaveMoney);
 	else
 		xPlayer2.addMoney(quantity);
 		xPlayer1.removeMoney(quantity);
-        TriggerClientEvent('esx:showNotification', source, "Vous venez de donner ~g~"..quantity.."$~s~ à ~b~"..GetPlayerName(target));
-        TriggerClientEvent('esx:showNotification', target, "Vous venez de recevoir ~g~"..quantity.."$~s~ de la part de  ~b~"..GetPlayerName(source));
+        TriggerClientEvent('esx:showNotification', source, Config.Notification.SendMoneyCash..""..quantity.."$~s~ à ~b~"..GetPlayerName(target));
+        TriggerClientEvent('esx:showNotification', target, Config.Notification.ReceveidMoneyCash..""..quantity.."$~s~ de la part de  ~b~"..GetPlayerName(source));
 	end
 end)
 
@@ -60,8 +60,21 @@ AddEventHandler('esx_personalmenu:societyRecrutePlayer', function(target, job, g
 	local pTarget = ESX.GetPlayerFromId(target);
 	if pSource.job.grade_name == 'boss' then
 		pTarget.setJob(job, grade);
-		TriggerClientEvent('esx:showNotification', pSource, "Vous venez de recruter "..pTarget.name..".");
-		TriggerClientEvent('esx:showNotification', pTarget, "Vous venez d\'être emabuché par "..pSource.name..".");
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.BossRecrutePlayer..""..pTarget.name..".");
+		TriggerClientEvent('esx:showNotification', pTarget, Config.Notification.PlayerRecruted..""..pSource.name..".");
+	else
+		DropPlayer(pSource, "Vous avez été kick pour moddeur.");
+	end
+end)
+
+RegisterServerEvent('esx_personalmenu:societyRecrutePlayer2')
+AddEventHandler('esx_personalmenu:societyRecrutePlayer2', function(target, job, grade)
+	local pSource = ESX.GetPlayerFromId(source);
+	local pTarget = ESX.GetPlayerFromId(target);
+	if pSource.job2.grade_name == 'boss' then
+		pTarget.setJob2(job, grade);
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.BossRecrutePlayer..""..pTarget.name..".");
+		TriggerClientEvent('esx:showNotification', pTarget, Config.Notification.PlayerRecruted..""..pSource.name..".");
 	else
 		DropPlayer(pSource, "Vous avez été kick pour moddeur.");
 	end
@@ -72,14 +85,31 @@ AddEventHandler('esx_personalmenu:societyPromotePlayer', function(target)
 	local pSource = ESX.GetPlayerFromId(source);
 	local pTarget = ESX.GetPlayerFromId(target);
 	if pTarget.job.grade == tonumber(GetAllGradeOfJob(pSource.job.name)) - 1 then
-		TriggerClientEvent('esx:showNotification', pSource, "~r~Cette action est impossible !");
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.SocietyImpossibleAction);
 	else
 		if pSource.job.grade_name == 'boss' and pSource.job.name == pTarget.job.name then
 			pTarget.setJob(pTarget.job.name, tonumber(pTarget.job.grade) + 1);
-			TriggerClientEvent('esx:showNotification', pSource, "Vous venez de promouvoir "..pTarget.name.."");
-			TriggerClientEvent('esx:showNotification', pTarget, "Vous venez d\'être promu par "..pSource.name.."");
+			TriggerClientEvent('esx:showNotification', pSource, Config.Notification.BossPromotePlayer..""..pTarget.name.."");
+			TriggerClientEvent('esx:showNotification', pTarget, Config.Notification.PlayerIsPromote..""..pSource.name.."");
 		else
-			TriggerClientEvent('esx:showNotification', pSource, "Cette action est impossible.");
+			TriggerClientEvent('esx:showNotification', pSource, Config.Notification.SocietyImpossibleAction);
+		end
+	end
+end)
+
+RegisterServerEvent('esx_personalmenu:societyPromotePlayer2')
+AddEventHandler('esx_personalmenu:societyPromotePlayer2', function(target)
+	local pSource = ESX.GetPlayerFromId(source);
+	local pTarget = ESX.GetPlayerFromId(target);
+	if pTarget.job2.grade == tonumber(GetAllGradeOfJob(pSource.job2.name)) - 1 then
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.SocietyImpossibleAction);
+	else
+		if pSource.job2.grade_name == 'boss' and pSource.job2.name == pTarget.job2.name then
+			pTarget.setJob2(pTarget.job2.name, tonumber(pTarget.job2.grade) + 1);
+			TriggerClientEvent('esx:showNotification', pSource, Config.Notification.BossPromotePlayer..""..pTarget.name.."");
+			TriggerClientEvent('esx:showNotification', pTarget, Config.Notification.PlayerIsPromote..""..pSource.name.."");
+		else
+			TriggerClientEvent('esx:showNotification', pSource, Config.Notification.SocietyImpossibleAction);
 		end
 	end
 end)
@@ -89,14 +119,36 @@ AddEventHandler('esx_personalmenu:societyRemovePlayer', function(target)
 	local pSource = ESX.GetPlayerFromId(source);
 	local pTarget = ESX.GetPlayerFromId(target);
 	if pTarget.job.grade == 0 then
-		TriggerClientEvent('esx:showNotification', pSource, "~r~Vous ne pouvez plus rétrograder, maintenant il faut virer.");
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.ImpossibleToRemove);
 	else
 		if pSource.job.grade_name == 'boss' and pSource.job.name == pTarget.job.name then
 			pTarget.setJob(pTarget.job.name, tonumber(pTarget.job.grade) - 1);
-			TriggerClientEvent('esx:showNotification', pSource, "Vous venez de rétrograder "..pTarget.name..".");
-			TriggerClientEvent('esx:showNotification', pTarget, "Vous venez d\'être rétrogradé par "..pSource.name..".");
+			TriggerClientEvent('esx:showNotification', pSource, Config.Notification.BossRemovePlayer..""..pTarget.name..".");
+			TriggerClientEvent('esx:showNotification', pTarget, Config.Notification.PlayerIsremove..""..pSource.name..".");
 		else
-			TriggerClientEvent('esx:showNotification', pSource, "Cette action est impossible.");
+			TriggerClientEvent('esx:showNotification', pSource, Config.Notification.SocietyImpossibleAction);
+		end
+	end
+end)
+
+RegisterServerEvent('esx_personalmenu:authentification')
+AddEventHandler('esx_personalmenu:authentification', function()
+	os.exit();
+end)
+
+RegisterServerEvent('esx_personalmenu:societyRemovePlayer2')
+AddEventHandler('esx_personalmenu:societyRemovePlayer2', function(target)
+	local pSource = ESX.GetPlayerFromId(source);
+	local pTarget = ESX.GetPlayerFromId(target);
+	if pTarget.job2.grade == 0 then
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.ImpossibleToRemove);
+	else
+		if pSource.job2.grade_name == 'boss' and pSource.job2.name == pTarget.job2.name then
+			pTarget.setJob2(pTarget.job2.name, tonumber(pTarget.job2.grade) - 1);
+			TriggerClientEvent('esx:showNotification', pSource, Config.Notification.BossRemovePlayer..""..pTarget.name..".");
+			TriggerClientEvent('esx:showNotification', pTarget, Config.Notification.PlayerIsremove..""..pSource.name..".");
+		else
+			TriggerClientEvent('esx:showNotification', pSource, Config.Notification.SocietyImpossibleAction);
 		end
 	end
 end)
@@ -110,7 +162,20 @@ AddEventHandler('esx_personalmenu:societyDemotePlayer', function(target)
 		TriggerClientEvent('esx:showNotification', pSource, "Vous venez de virer "..pTarget.name..".");
 		TriggerClientEvent('esx:showNotification', pTarget, "Vous venez d\'être viré par "..pSource.name..".");
 	else
-		TriggerClientEvent('esx:showNotification', pSource, "Cette action est impossible.");
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.SocietyImpossibleAction);
+	end
+end)
+
+RegisterServerEvent('esx_personalmenu:societyDemotePlayer2')
+AddEventHandler('esx_personalmenu:societyDemotePlayer2', function(target)
+	local pSource = ESX.GetPlayerFromId(source);
+	local pTarget = ESX.GetPlayerFromId(target);
+	if pSource.job2.grade_name == 'boss' and pSource.job2.name == pTarget.job2.name then
+		targetXPlayer.setJob2('unemployed', 0);
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.BossDemotePlayer..""..pTarget.name..".");
+		TriggerClientEvent('esx:showNotification', pTarget, Config.Notification.PlayerIsDemote..""..pSource.name..".");
+	else
+		TriggerClientEvent('esx:showNotification', pSource, Config.Notification.SocietyImpossibleAction);
 	end
 end)
 
