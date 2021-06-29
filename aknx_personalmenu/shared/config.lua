@@ -1,17 +1,30 @@
 Config = {}
+Traduction = {}
+Config.Notification = {}
+Config.Keyboard = {}
+Config.Webhooks = {}
 
 Config.GetESX = 'esx:getSharedObject'
 
-Config.YourServerName = "NEXUS" -- Title of the personal menu
+Config.YourServerName = "AKNX" -- Title of the personal menu
 Config.DescriptionMenu = "MENU PERSONNEL" -- Description of the personal menu
-Config.MenuBannerColor = {255, 255, 255, 255} -- The color of the banner of the menu, in R,G,B, OPACITY, check this website --> https://htmlcolorcodes.com/fr/
+Config.MenuBannerColor = { -- The color of the banner of the menu, in R,G,B, OPACITY, check this website --> https://htmlcolorcodes.com/fr/
+    r = 0, -- red
+    g = 0, -- green
+    b = 0, -- blue
+    opacity = 255 -- opacity
+}
+Config.EnableLog = true -- for active discord log, if you put true, put your webhooks in "config_webhooks" file.
 Config.PermissionsForAdministration = { -- permissions authorized for access to the admin menu
     'superadmin',
     'admin',
 }
+Config.EnableGroupAdminMessage = true -- for active a message when staff mod is enabled
 Config.CanDropItem = true -- for drop an item of player inventory
 Config.CanDropWeapon = true -- for drop an weapon of player inventory
 Config.EnableDoubleJob = true -- job 2 and not org
+Config.HaveDpEmotes = true -- put true if you have dpemotes on your server
+Config.EnableNotification = true -- for active notification when you do an action, put false for disabled if you have notif with other scripts.
 
 Config.WalksAnimation = {
     ["Alien"] = "move_m@alien",

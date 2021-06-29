@@ -27,6 +27,8 @@ self = {
     societyIndex2 = 1,
     societyList2 = { '~g~Recruter~s~', '~g~Promouvoir~s~', '~r~Destituer~s~', '~r~Virer~s~' },
     InStaff = false,
+    playersList = {},
+    playersInZone = false,
     activeNoclip = false,
     noclipSpeed = 1.0,
     noclipC = false,
@@ -38,30 +40,32 @@ self = {
     giveList = { "Cash", "Banque", "Sale" },
     showNames = false,
     gamerTags = {},
+    vehicleAdminIndex = 1,
+    vehicleAdminList = {"Spawn un véhicule", "Réparer le véhicule", "Retourner le véhicule" },
 };
 
 openF5Menu = false;
 RMenu.Add('personal_menu', 'main_menu', RageUI.CreateMenu(Config.YourServerName, Config.DescriptionMenu));
-RMenu.Add('personal_menu', 'inventory_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleInventoryMenu, Config.DescriptionInventoryMenu));
-RMenu.Add('personal_menu', 'inventory_use', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'inventory_menu'), Config.TitleInventoryUseMenu, Config.DescriptionUseInventoryMenu));
-RMenu.Add('personal_menu', 'weapon_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleWeaponMenu, Config.DescriptionWeaponMenu));
-RMenu.Add('personal_menu', 'weapon_use', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'weapon_menu'), Config.TitleWeaponUseMenu, Config.DescriptionUseWeaponMenu));
-RMenu.Add('personal_menu', 'wallet_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleWalletMenu, Config.DescriptionWalletMenu));
-RMenu.Add('personal_menu', 'moneycash_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'wallet_menu'), Config.TitleMoneyCashMenu, Config.DescriptionMoneyCashMenu));
-RMenu.Add('personal_menu', 'blackmoney_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'wallet_menu'), Config.TitleBlackMoneyMenu, Config.DescriptionBlackMoneyMenu));
-RMenu.Add('personal_menu', 'billing_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleBillingMenu, Config.DescriptionBillingMenu));
-RMenu.Add('personal_menu', 'clothes_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleClothesMenu, Config.DescriptionClothesMenu));
-RMenu.Add('personal_menu', 'animations_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleAnimationsMenu, Config.DescriptionAnimationsMenu));
-RMenu.Add('personal_menu', 'animations_walk_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'animations_menu'), Config.TitleAnimationsWalkMenu, Config.DescriptionAnimationsWalkMenu));
-RMenu.Add('personal_menu', 'animations_face_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'animations_menu'), Config.TitleAnimationsFaceMenu, Config.DescriptionAnimationsFaceMenu));
-RMenu.Add('personal_menu', 'vehicle_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleVehicleMenu, Config.DescriptionVehicleMenu));
-RMenu.Add('personal_menu', 'vehicle_limiter_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'vehicle_menu'), Config.TitleVehicleLimiterMenu, Config.DescriptionVehicleLimiterMenu));
-RMenu.Add('personal_menu', 'vehicle_doors_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'vehicle_menu'), Config.TitleVehicleDoorsMenu, Config.DescriptionVehicleDoorsMenu));
-RMenu.Add('personal_menu', 'society_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleSocietyMenu, Config.DescriptionSocietyMenu));
-RMenu.Add('personal_menu', 'admin_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Config.TitleAdminMenu, Config.DescriptionAdminMenu));
-RMenu.Add('personal_menu', 'admin_menu_divers', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'admin_menu'), Config.TitleAdminDiversMenu, Config.DescriptionAdminDiversMenu));
-RMenu.Add('personal_menu', 'admin_menu_vehicles', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'admin_menu'), Config.TitleAdminVehicleMenu, Config.DescriptionAdminVehicleMenu));
-RMenu.Add('personal_menu', 'admin_menu_list', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'admin_menu'), Config.TitleAdminListMenu, Config.DescriptionAdminListMenu));
+RMenu.Add('personal_menu', 'inventory_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleInventoryMenu, Traduction.DescriptionInventoryMenu));
+RMenu.Add('personal_menu', 'inventory_use', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'inventory_menu'), Traduction.TitleInventoryUseMenu, Traduction.DescriptionUseInventoryMenu));
+RMenu.Add('personal_menu', 'weapon_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleWeaponMenu, Traduction.DescriptionWeaponMenu));
+RMenu.Add('personal_menu', 'weapon_use', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'weapon_menu'), Traduction.TitleWeaponUseMenu, Traduction.DescriptionUseWeaponMenu));
+RMenu.Add('personal_menu', 'wallet_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleWalletMenu, Traduction.DescriptionWalletMenu));
+RMenu.Add('personal_menu', 'moneycash_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'wallet_menu'), Traduction.TitleMoneyCashMenu, Traduction.DescriptionMoneyCashMenu));
+RMenu.Add('personal_menu', 'blackmoney_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'wallet_menu'), Traduction.TitleBlackMoneyMenu, Traduction.DescriptionBlackMoneyMenu));
+RMenu.Add('personal_menu', 'billing_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleBillingMenu, Traduction.DescriptionBillingMenu));
+RMenu.Add('personal_menu', 'clothes_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleClothesMenu, Traduction.DescriptionClothesMenu));
+RMenu.Add('personal_menu', 'animations_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleAnimationsMenu, Traduction.DescriptionAnimationsMenu));
+RMenu.Add('personal_menu', 'animations_walk_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'animations_menu'), Traduction.TitleAnimationsWalkMenu, Traduction.DescriptionAnimationsWalkMenu));
+RMenu.Add('personal_menu', 'animations_face_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'animations_menu'), Traduction.TitleAnimationsFaceMenu, Traduction.DescriptionAnimationsFaceMenu));
+RMenu.Add('personal_menu', 'vehicle_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleVehicleMenu, Traduction.DescriptionVehicleMenu));
+RMenu.Add('personal_menu', 'vehicle_limiter_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'vehicle_menu'), Traduction.TitleVehicleLimiterMenu, Traduction.DescriptionVehicleLimiterMenu));
+RMenu.Add('personal_menu', 'vehicle_doors_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'vehicle_menu'), Traduction.TitleVehicleDoorsMenu, Traduction.DescriptionVehicleDoorsMenu));
+RMenu.Add('personal_menu', 'society_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleSocietyMenu, Traduction.DescriptionSocietyMenu));
+RMenu.Add('personal_menu', 'admin_menu', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'main_menu'), Traduction.TitleAdminMenu, Traduction.DescriptionAdminMenu));
+RMenu.Add('personal_menu', 'admin_menu_divers', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'admin_menu'), Traduction.TitleAdminDiversMenu, Traduction.DescriptionAdminDiversMenu));
+RMenu.Add('personal_menu', 'admin_menu_vehicles', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'admin_menu'), Traduction.TitleAdminVehicleMenu, Traduction.DescriptionAdminVehicleMenu));
+RMenu.Add('personal_menu', 'admin_menu_list', RageUI.CreateSubMenu(RMenu:Get('personal_menu', 'admin_menu'), Traduction.TitleAdminListMenu, Traduction.DescriptionAdminListMenu));
 RMenu:Get('personal_menu', 'main_menu').Closed = function()
 	openF5Menu = false;
 end
@@ -77,73 +81,73 @@ function openPersonalMenu()
                 Citizen.Wait(1)
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'main_menu'), true, true, true, function()
                     if Config.EnableInventory then
-                        RageUI.ButtonWithStyle(Config.InventoryButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                        RageUI.ButtonWithStyle(Traduction.InventoryButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                             if s then
                                 ESX.PlayerData = ESX.GetPlayerData()
                             end
                         end, RMenu:Get('personal_menu', 'inventory_menu'));
                     end
                     if Config.EnableWeaponGestion then
-                        RageUI.ButtonWithStyle(Config.WeaponGestionButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                        RageUI.ButtonWithStyle(Traduction.WeaponGestionButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                             if s then
                             end
                         end, RMenu:Get('personal_menu', 'weapon_menu'));
                     end
                     if Config.EnableWallet then
-                        RageUI.ButtonWithStyle(Config.WalletButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                        RageUI.ButtonWithStyle(Traduction.WalletButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                             if s then
                             end
                         end, RMenu:Get('personal_menu', 'wallet_menu'));
                     end
                     if Config.EnableBilling then
-                        RageUI.ButtonWithStyle(Config.BillingButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                        RageUI.ButtonWithStyle(Traduction.BillingButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                             if s then
                             end
                         end, RMenu:Get('personal_menu', 'billing_menu'));
                     end
                     if Config.EnableClothes then
-                        RageUI.ButtonWithStyle(Config.ClothesButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                        RageUI.ButtonWithStyle(Traduction.ClothesButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                             if s then
                             end
                         end, RMenu:Get('personal_menu', 'clothes_menu'));
                     end
                     if Config.EnableAnimations then
-                        RageUI.ButtonWithStyle(Config.AnimationsButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                        RageUI.ButtonWithStyle(Traduction.AnimationsButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                             if s then
                             end
                         end, RMenu:Get('personal_menu', 'animations_menu'));
                     end
                     if Config.EnableVehicleGestion then
                         if IsPedSittingInAnyVehicle(PlayerPedId()) then
-                            RageUI.ButtonWithStyle(Config.VehicleButtonTitle, nil, {RightLabel = "→"},true, function(_,_,s)
+                            RageUI.ButtonWithStyle(Traduction.VehicleButtonTitle, nil, {RightLabel = "→"},true, function(_,_,s)
                                 if s then
                                 end
                             end, RMenu:Get('personal_menu', 'vehicle_menu'));
                         else
-                            RageUI.ButtonWithStyle(Config.VehicleButtonTitle, nil, {RightBadge = RageUI.BadgeStyle.Lock}, false, function()
+                            RageUI.ButtonWithStyle(Traduction.VehicleButtonTitle, nil, {RightBadge = RageUI.BadgeStyle.Lock}, false, function()
                             end)
                         end
                     end
                     --> @TODO FAIRE LE JOB 2
                     if Config.EnableSociety then
                         if ESX.PlayerData.job.grade_name == 'boss' then
-                            RageUI.ButtonWithStyle(Config.SocietyButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                            RageUI.ButtonWithStyle(Traduction.SocietyButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                                 if s then
                                 end
                             end, RMenu:Get('personal_menu', 'society_menu'));
                         else
-                            RageUI.ButtonWithStyle(Config.SocietyButtonTitle, nil, {RightBadge = RageUI.BadgeStyle.Lock}, false, function()
+                            RageUI.ButtonWithStyle(Traduction.SocietyButtonTitle, nil, {RightBadge = RageUI.BadgeStyle.Lock}, false, function()
                             end)
                         end
                         if Config.EnableAdmin then
-                            RageUI.ButtonWithStyle(Config.AdminButtonTitle, nil, {RightLabel = "→"}, access_admin_menu, function()
+                            RageUI.ButtonWithStyle(Traduction.AdminButtonTitle, nil, {RightLabel = "→"}, access_admin_menu, function()
                             end, RMenu:Get('personal_menu', 'admin_menu'));
                         end
                     end
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'inventory_menu'), true, true, true, function()
-                    RageUI.Separator(Config.InventorySeparatorTitle);
+                    RageUI.Separator(Traduction.InventorySeparatorTitle);
                     ESX.PlayerData = ESX.GetPlayerData();
                     for i = 1, #ESX.PlayerData.inventory do
                         if ESX.PlayerData.inventory[i].count > 0 then
@@ -157,24 +161,28 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'inventory_use'), true, true, true, function()
-                    RageUI.ButtonWithStyle(Config.UseButtonTitle, nil, {RightLabel = "→→"}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.UseButtonTitle, nil, {RightLabel = "→→"}, true, function(_,_,s)
                         if s then
                             if self.itemSelected.usable then
                                 TriggerServerEvent('esx:useItem', self.itemSelected.name);
                                 Citizen.Wait(150);
                                 RageUI:GoBack();
-                                ESX.ShowNotification("Vous venez d\'utiliser ~y~x1 ~b~"..self.itemSelected.label..".", true, true, 50);
+                                if Config.EnableNotification then
+                                    ESX.ShowNotification(Config.Notification.UseItem..""..self.itemSelected.label..""..Config.Notification.AddPointInNotif, true, true, 50);
+                                end
                             else
-                                ESX.ShowNotification("~r~Cet item n\'est pas utilisable !", true, true, 50);
+                                if Config.EnableNotification then
+                                    ESX.ShowNotification(Config.Notification.ItemNotUsable, true, true, 50);
+                                end
                             end
                         end
                     end)
-                    RageUI.ButtonWithStyle(Config.SendButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.SendButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if a then
                             PlayerMarker();
                         end
                         if s then
-                            local quantity = KeyboardInput('Quantité de '..self.itemSelected.label..' à donner :', "", 25)
+                            local quantity = KeyboardInput('Quantité de '..self.itemSelected.label..' à donner :', "", 25);
                             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                             if tonumber(quantity) then
                                 if closestDistance ~= -1 and closestDistance <= 3 then
@@ -183,33 +191,34 @@ function openPersonalMenu()
                                         TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_standard', self.itemSelected.name, quantity);
                                         Citizen.Wait(150);
                                         RageUI:GoBack();
-                                        ESX.ShowNotification("Vous venez de donner ~y~x"..quantity.."~b~"..self.itemSelected.label.."~s~à ~p~"..GetPlayerName(closestPlayer), true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.TransferItem..""..quantity.."~b~"..self.itemSelected.label.."~s~à ~p~"..GetPlayerName(closestPlayer), true, true, 50);
+                                        TriggerServerEvent('esx_personalmenu:logTransferItem', self.itemSelected.name, quantity, GetPlayerName(closestPlayer));
                                     else
-                                        ESX.ShowNotification("~r~Vous ne pouvez pas donner d\'items dans un véhicule.", true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                     end
                                 else
-                                    ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                    ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                                 end
                             else
-                                ESX.ShowNotification("~r~Quantité d\'items invalides !", true, true, 50);
+                                ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                             end
                         end
                     end)
                     if Config.CanDropItem then
-                        RageUI.ButtonWithStyle(Config.DropButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                        RageUI.ButtonWithStyle(Traduction.DropButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                             if s then
                                 local quantity = KeyboardInput('Quantité de '..self.itemSelected.label..' à jeter :', "", 25);
                                 if tonumber(quantity) then
                                     if IsPedOnFoot(PlayerPedId()) then
                                         TriggerServerEvent('esx:removeInventoryItem', 'item_standard', self.itemSelected.name, tonumber(quantity));
-                                        ESX.ShowNotification("Vous venez de jeter ~y~x"..tonumber(quantity).." ~b~"..self.itemSelected.label..".", true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.DropItem..""..tonumber(quantity).." ~b~"..self.itemSelected.label..".", true, true, 50);
                                         Citizen.Wait(150);
                                         RageUI:GoBack();
                                     else
-                                        ESX.ShowNotification("~r~Vous ne pouvez pas jeter d\'items dans un véhicule.", true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                     end
                                 else
-                                    ESX.ShowNotification("~r~Quantité d\'items invalides !", true, true, 50);
+                                    ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                                 end
                             end
                         end)
@@ -217,7 +226,7 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'weapon_menu'), true, true, true, function()
-                    RageUI.Separator(Config.WeaponSeparatorTitle);
+                    RageUI.Separator(Traduction.WeaponSeparatorTitle);
                     for i = 1, #self.WeaponData, 1 do
                         if HasPedGotWeapon(PlayerPedId(), self.WeaponData[i].hash, false) then
                             local ammo = GetAmmoInPedWeapon(PlayerPedId(), self.WeaponData[i].hash);
@@ -231,7 +240,7 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'weapon_use'), true, true, true, function()
-                    RageUI.ButtonWithStyle(Config.SendWeaponButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.SendWeaponButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if a then
                             PlayerMarker();
                         end
@@ -242,15 +251,16 @@ function openPersonalMenu()
                                 if IsPedOnFoot(cPed) then
                                     local weapon_ammo = GetAmmoInPedWeapon(PlayerPedId(), self.weaponSelected.hash)
                                     TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_weapon', self.weaponSelected.name, weapon_ammo);
+                                    TriggerServerEvent('esx_personalmenu:logTransferWeapon', self.weaponSelected.name, weapon_ammo, GetPlayerName(closestPlayer))
                                 else
-                                    ESX.ShowNotification("~r~Vous ne pouvez pas donner d\'armes dans un véhicule !", true, true, 50) ;
+                                    ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50) ;
                                 end
                             else
-                                ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                             end
                         end
                     end)
-                    RageUI.ButtonWithStyle(Config.SendAmmoButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.SendAmmoButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if a then
                             PlayerMarker();
                         end
@@ -266,33 +276,34 @@ function openPersonalMenu()
                                             if quantity <= get_ammo and quantity >= 0 then
                                                 SetPedAmmo(PlayerPedId(), self.weaponSelected.name, math.floor(get_ammo - quantity));
                                                 TriggerServerEvent('esx_personalmenu:sendAmmo', GetPlayerServerId(closestPlayer), self.weaponSelected.name, quantity);
-                                                ESX.ShowNotification("Vous avez donné x"..quantity.." munitions de  "..self.weaponSelected.label.." à "..GetPlayerName(closestPlayer)..".", true, true, 50)
+                                                ESX.ShowNotification(Config.Notification.SendAmmo..""..quantity.." munitions de  "..self.weaponSelected.label.." à "..GetPlayerName(closestPlayer)..".", true, true, 50)
+                                                TriggerServerEvent('esx_personalmenu:logTransferWeaponAmmo', self.weaponSelected.name, quantity, GetPlayerName(closestPlayer))
                                             else
-                                                ESX.ShowNotification("~r~Vous n\'avez pas autant de munitions dans cette arme !", true, true, 50);
+                                                ESX.ShowNotification(Config.Notification.DontHaveAmmo , true, true, 50);
                                             end
                                         else
-                                            ESX.ShowNotification("~r~Vous n\'avez pas de munitions dans cette arme !", true, true, 50);
+                                            ESX.ShowNotification(Config.Notification.DontHaveAmmo2, true, true, 50);
                                         end
                                     else
-                                        ESX.ShowNotification("~r~Vous ne pouvez pas donner de munitions dans un véhicule !", true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                     end
                                 else
-                                    ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                    ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                                 end
                             else
-                                ESX.ShowNotification("~r~Nombre de munitions invalides !", true, true, 50);
+                                ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                             end
                         end
                     end)
                     if Config.CanDropWeapon then
-                        RageUI.ButtonWithStyle(Config.DropWeaponButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                        RageUI.ButtonWithStyle(Traduction.DropWeaponButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                             if s then
                                 if IsPedOnFoot(PlayerPedId()) then
                                     TriggerServerEvent('esx:removeInventoryItem', 'item_weapon', self.weaponSelected.name);
                                     Citizen.Wait(150);
                                     RageUI:GoBack();
                                 else
-                                    ESX.ShowNotification("~r~Vous ne pouvez pas jeter d\'armes dans un véhicule.", true, true, 50);
+                                    ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                 end
                             end
                         end)
@@ -300,18 +311,18 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'wallet_menu'), true, true, true, function()
-                    RageUI.Separator(Config.JobSeparatorTitle);
+                    RageUI.Separator(Traduction.JobSeparatorTitle);
                     RageUI.Separator(ESX.PlayerData.job.label.. " - " ..ESX.PlayerData.job.grade_label);
                     -- @TODO --> if config job2 jsp koi then
                     -- RageUI.Separator(ESX.PlayerData.job2.label.. " - " ..ESX.PlayerData.job2.grade_label)
                     -- end
-                    RageUI.Separator(Config.InformationsWalletSeparatorTitle);
-                    RageUI.ButtonWithStyle(Config.ShowIdentityCardButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.Separator(Traduction.InformationsWalletSeparatorTitle);
+                    RageUI.ButtonWithStyle(Traduction.ShowIdentityCardButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if s then
                             TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(PlayerId()));
                         end
                     end)
-                    RageUI.ButtonWithStyle(Config.ShowIdentityCardToPlayerButtonTitle, nil, {RightLabel = "→→"},true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.ShowIdentityCardToPlayerButtonTitle, nil, {RightLabel = "→→"},true, function(_,a,s)
                         if a then
                             PlayerMarker();
                         end
@@ -320,24 +331,24 @@ function openPersonalMenu()
                             if closestDistance ~= -1 and closestDistance <= 3.0 then
                                 TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(closestPlayer));
                             else
-                                ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                             end
                         end
                     end)
-                    RageUI.Separator(Config.WalletMoneySeparatorTitle);
-                    RageUI.ButtonWithStyle(Config.MoneyCashButtonTitle, nil, {RightLabel = "~g~"..ESX.Math.GroupDigits(ESX.PlayerData.money.."$ ~s~→")}, true, function(_,a,s)
+                    RageUI.Separator(Traduction.WalletMoneySeparatorTitle);
+                    RageUI.ButtonWithStyle(Traduction.MoneyCashButtonTitle, nil, {RightLabel = "~g~"..ESX.Math.GroupDigits(ESX.PlayerData.money.."$ ~s~→")}, true, function(_,a,s)
                         if s then 
                         end
                     end, RMenu:Get('personal_menu', 'moneycash_menu'))
                     for i = 1, #ESX.PlayerData.accounts, 1 do
                         if ESX.PlayerData.accounts[i].name == 'bank'  then
-                            self.black_money = RageUI.ButtonWithStyle(Config.MoneyBankButtonTitle, nil, {RightLabel = "~b~"..ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money.."$")}, true, function()
+                            self.black_money = RageUI.ButtonWithStyle(Traduction.MoneyBankButtonTitle, nil, {RightLabel = "~b~"..ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money.."$")}, true, function()
                             end)
                         end
                     end
                     for i = 1, #ESX.PlayerData.accounts, 1 do
                         if ESX.PlayerData.accounts[i].name == 'black_money'  then
-                            self.black_money = RageUI.ButtonWithStyle(Config.BlackMoneyButtonTitle, nil, {RightLabel = "~r~"..ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money.."$ ~s~→")}, true, function(h,a,s)
+                            self.black_money = RageUI.ButtonWithStyle(Traduction.BlackMoneyButtonTitle, nil, {RightLabel = "~r~"..ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money.."$ ~s~→")}, true, function(h,a,s)
                                 if s then 
                                 end 
                             end, RMenu:Get('personal_menu', 'blackmoney_menu'));
@@ -346,12 +357,12 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'moneycash_menu'), true, true, true, function()
-                    RageUI.ButtonWithStyle(Config.SendMoneyCashButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.SendMoneyCashButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if a then
                             PlayerMarker();
                         end
                         if s then
-                            local quantity = KeyboardInput('Quantité d\'argent liquide à donner :', "", 25)
+                            local quantity = KeyboardInput(Config.Keyboard.SendCashMoney, "", 25)
                             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                             if tonumber(quantity) then
                                 if closestDistance ~= -1 and closestDistance <= 3 then
@@ -360,42 +371,43 @@ function openPersonalMenu()
                                         TriggerServerEvent('esx_personalmenu:TransferCashMoney', GetPlayerServerId(closestPlayer), tonumber(quantity));
                                         Citizen.Wait(150);
                                         RageUI:GoBack();
+                                        TriggerServerEvent('esx_personalmenu:logTransferCashMoney', quantity, GetPlayerName(closestPlayer));
                                     else
-                                        ESX.ShowNotification("~r~Vous ne pouvez pas donner d\'argent dans un véhicule !", true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                     end
                                 else
-                                    ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                    ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                                 end
                             else
-                                ESX.ShowNotification("~r~La somme donnée est invalide.", true, true, 50);
+                                ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                             end
                         end
                     end)
-                    RageUI.ButtonWithStyle(Config.DropMoneyCashButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.DropMoneyCashButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if s then
-                            local quantity = KeyboardInput('Quantité d\'argent liquide à donner :', "", 25);
+                            local quantity = KeyboardInput(Config.Keyboard.DropCashMoney, "", 25);
                             if tonumber(quantity) then
                                 if not IsPedSittingInAnyVehicle(PlayerPedId()) then
                                     TriggerServerEvent('esx:removeInventoryItem', 'item_money', 'money', tonumber(quantity));
                                     Citizen.Wait(150);
                                     RageUI:GoBack();
                                 else
-                                    ESX.ShowNotification("~r~Vous ne pouvez pas jeter d\'argent dans un véhicule !", true, true, 50);
+                                    ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                 end
                             else
-                                ESX.ShowNotification("~r~La somme donnée est invalide.", true, true, 50);
+                                ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                             end
                         end
                     end)
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'blackmoney_menu'), true, true, true, function()
-                    RageUI.ButtonWithStyle(Config.SendBlackMoneyCashButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.SendBlackMoneyCashButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if a then
                             PlayerMarker();
                         end
                         if s then
-                            local quantity = KeyboardInput('Quantité d\'argent sale à donner :', "", 25);
+                            local quantity = KeyboardInput(Config.Keyboard.SendBlackMoney, "", 25);
                             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                             if tonumber(quantity) then
                                 if closestDistance ~= -1 and closestDistance <= 3 then
@@ -404,37 +416,38 @@ function openPersonalMenu()
                                         TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_account', 'black_money', tonumber(quantity));
                                         Citizen.Wait(150);
                                         RageUI:GoBack();
+                                        TriggerServerEvent('esx_personalmenu:logTransferBlackMoney', quantity, GetPlayerName(closestPlayer));
                                     else
-                                        ESX.ShowNotification("~r~Vous ne pouvez pas donner d\'argent dans un véhicule !", true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                     end
                                 else
-                                    ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                    ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                                 end
                             else
-                                ESX.ShowNotification("~r~La somme donnée est invalide.", true, true, 50);
+                                ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                             end
                         end
                     end)
-                    RageUI.ButtonWithStyle(Config.DropBlackMoneyCashButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.DropBlackMoneyCashButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if s then
-                            local quantity = KeyboardInput('Quantité d\'argent liquide à donner :', "", 25);
+                            local quantity = KeyboardInput(Config.Keyboard.DropBlackMoney, "", 25);
                             if tonumber(quantity) then
                                 if not IsPedSittingInAnyVehicle(PlayerPedId()) then
                                     TriggerServerEvent('esx:removeInventoryItem', 'item_account', 'black_money', tonumber(quantity));
                                     Citizen.Wait(150);
                                     RageUI:GoBack();
                                 else
-                                    ESX.ShowNotification("~r~Vous ne pouvez pas jeter d\'argent sale dans un véhicule !", true, true, 50);
+                                    ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                 end
                             else
-                                ESX.ShowNotification("~r~La somme donnée est invalide.", true, true, 50);
+                                ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                             end
                         end
                     end)
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'billing_menu'), true, true, true, function()
-                    RageUI.ButtonWithStyle(Config.RefreshBillingButtonTitle, nil, {RightLabel = "→→"}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.RefreshBillingButtonTitle, nil, {RightLabel = "→→"}, true, function(_,_,s)
                         if s then
                             ESX.TriggerServerCallback('esx_billing:getBills', function(bills)
                                 self.billing_table = bills;
@@ -442,7 +455,7 @@ function openPersonalMenu()
                         end
                     end)
                     if #self.billing_table == 0 then
-                        RageUI.Separator("") RageUI.Separator(Config.NotBillingButtonTitle) RageUI.Separator("")
+                        RageUI.Separator("") RageUI.Separator(Traduction.NotBillingButtonTitle) RageUI.Separator("")
                     end
                     for i = 1, #self.billing_table, 1 do
                         RageUI.ButtonWithStyle(self.billing_table[i].label, nil, {RightLabel = '[~b~$' .. ESX.Math.GroupDigits(self.billing_table[i].amount.."~s~] →")}, true, function(_,_,s)
@@ -456,7 +469,7 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'clothes_menu'), true, true, true, function()
-                    RageUI.Separator(Config.HeadSeparatorTitle)
+                    RageUI.Separator(Traduction.HeadSeparatorTitle)
                     RageUI.List("Actions", self.clothesHeadList, self.headClothesIndex, nil, {}, true, function(_,a,s,i)
                         self.headClothesIndex = i;
                         if a then
@@ -529,7 +542,7 @@ function openPersonalMenu()
                         end
                         end
                     end)
-                    RageUI.Separator(Config.HightSeparatorTitle)
+                    RageUI.Separator(Traduction.HightSeparatorTitle)
                     RageUI.List("Actions", self.clothesHightList, self.hightClothesIndex, nil, {}, true, function(_,a,s,i)
                         self.hightClothesIndex = i;
                         if a then
@@ -670,7 +683,7 @@ function openPersonalMenu()
                         end
                         end
                     end)
-                    RageUI.Separator(Config.DownSeparatorTitle)
+                    RageUI.Separator(Traduction.DownSeparatorTitle)
                     RageUI.List("Actions", self.clothesDownList, self.downClothesIndex, nil, {}, true, function(_,a,s,i)
                         self.downClothesIndex = i;
                         if a then
@@ -720,25 +733,27 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'animations_menu'), true, true, true, function()
-                    RageUI.ButtonWithStyle(Config.WalkButtonTitle, nil, {RightLabel = "→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.WalkButtonTitle, nil, {RightLabel = "→"}, true, function(_,a,s)
                         if s then
                         end
                     end, RMenu:Get('personal_menu', 'animations_walk_menu'))
-                    RageUI.ButtonWithStyle(Config.FaceExpressionsButtonTitle, nil, {RightLabel = "→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.FaceExpressionsButtonTitle, nil, {RightLabel = "→"}, true, function(_,a,s)
                         if s then
                         end
                     end, RMenu:Get('personal_menu', 'animations_face_menu'))
-                    RageUI.ButtonWithStyle(Config.OpenAnimationButtonTitle, nil, {RightLabel = "→"}, true, function(_,a,s)
-                        if s then
-                            RageUI.CloseAll();
-                            ExecuteCommand("emotemenu");
-                            print("dpemotes requis"); -- à enlever si vous voulez
-                        end
-                    end)
+                    if Config.HaveDpEmotes then
+                        RageUI.ButtonWithStyle(Traduction.OpenAnimationButtonTitle, nil, {RightLabel = "→"}, true, function(_,a,s)
+                            if s then
+                                RageUI.CloseAll();
+                                ExecuteCommand("emotemenu");
+                                print("dpemotes requis"); -- à enlever si vous voulez
+                            end
+                        end)
+                    end
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'animations_walk_menu'), true, true, true, function()
-                    RageUI.ButtonWithStyle(Config.ResetWalkButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.ResetWalkButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if s then
                             ResetPedMovementClipset(PlayerPedId());
                         end
@@ -755,7 +770,7 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'animations_face_menu'), true, true, true, function()
-                    RageUI.ButtonWithStyle(Config.ResetFaceExpressionButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                    RageUI.ButtonWithStyle(Traduction.ResetFaceExpressionButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
                         if s then
                             ClearFacialIdleAnimOverride(PlayerPedId());
                         end
@@ -770,7 +785,7 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'vehicle_menu'), true, true, true, function()
-                    RageUI.Checkbox(Config.VehicleEngineButtonTitle, nil, checkbox,{},function(_,_,s,c)
+                    RageUI.Checkbox(Traduction.VehicleEngineButtonTitle, nil, checkbox,{},function(_,_,s,c)
                         if s then
                             checkbox = c
                             if c then
@@ -784,15 +799,15 @@ function openPersonalMenu()
                             end
                         end
                     end)
-                    RageUI.ButtonWithStyle(Config.LimiterVehButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.LimiterVehButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                         if s then
                         end
                     end, RMenu:Get('personal_menu', 'vehicle_limiter_menu'))
-                    RageUI.ButtonWithStyle(Config.DoorsVehButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.DoorsVehButtonTitle, nil, {RightLabel = "→"}, true, function(_,_,s)
                         if s then
                         end
                     end, RMenu:Get('personal_menu', 'vehicle_doors_menu'))
-                    RageUI.List(Config.WindowVehListTitle, self.windowVehList, self.windowVehIndex, nil, {}, true, function(_,a,s,index)
+                    RageUI.List(Traduction.WindowVehListTitle, self.windowVehList, self.windowVehIndex, nil, {}, true, function(_,a,s,index)
                         self.windowVehIndex = index;
                         if a then
                             if index == 1 then
@@ -812,7 +827,7 @@ function openPersonalMenu()
                         end
                     end)
                     if GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false))*3.6 < 1.0 then
-                        RageUI.ButtonWithStyle(Config.ExitVehicleButtonTitle, nil, {}, true, function(_,_,s)
+                        RageUI.ButtonWithStyle(Traduction.ExitVehicleButtonTitle, nil, {}, true, function(_,_,s)
                             if s then
                                 local pCoords = GetEntityCoords(PlayerPedId());
                                 SetEntityCoords(PlayerPedId(), pCoords.x, pCoords.y, pCoords.z+0.5); -- 200 qi Akashi ?
@@ -820,43 +835,43 @@ function openPersonalMenu()
                             end
                         end)
                     else
-                        RageUI.ButtonWithStyle(Config.ExitVehicleButtonTitle, nil, {}, false, function()
+                        RageUI.ButtonWithStyle(Traduction.ExitVehicleButtonTitle, nil, {}, false, function()
                         end)
                     end
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'vehicle_limiter_menu'), true, true, true, function()
-                    RageUI.ButtonWithStyle("Vitesse :~b~ Par défaut" , nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.LimitatorDefault, nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
                         if s then
                             SetEntityMaxSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 1000.0/3.6);
                         end
                     end)
-                    RageUI.ButtonWithStyle("Vitesse :~g~ 30 Km/h" , nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.Limitator30km , nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
                         if s then
                             SetEntityMaxSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 30.0/3.6);
                         end
                     end)
-                    RageUI.ButtonWithStyle("Vitesse :~g~ 50 Km/h" , nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.Limitator50km, nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
                         if s then
                             SetEntityMaxSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 50.0/3.6);
                         end
                     end)
-                    RageUI.ButtonWithStyle("Vitesse :~g~ 80 Km/h" , nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.Limitator80km, nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
                         if s then
                             SetEntityMaxSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 80.0/3.6);
                         end
                     end)
-                    RageUI.ButtonWithStyle("Vitesse :~g~ 120 Km/h" , nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.Limitator120km, nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
                         if s then
                             SetEntityMaxSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 120.0/3.6);
                         end
                     end)
-                    RageUI.ButtonWithStyle("Vitesse :~g~ 150 Km/h" , nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.Limitator150km, nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
                         if s then
                             SetEntityMaxSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 150.0/3.6);
                         end
                     end)
-                    RageUI.ButtonWithStyle("Vitesse :~g~ 180 Km/h" , nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.Limitator180km, nil, {RightBadge = RageUI.BadgeStyle.Car}, true, function(_,_,s)
                         if s then
                             SetEntityMaxSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 180.0/3.6);
                         end
@@ -864,7 +879,7 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'vehicle_doors_menu'), true, true, true, function()
-                    RageUI.List('Actions sur toutes les portes', self.doorStatusList, self.doorStatusIndex, nil, {RightLabel = nil}, true, function(_,_,s,i)
+                    RageUI.List(Traduction.ActionOnAllDoors, self.doorStatusList, self.doorStatusIndex, nil, {RightLabel = nil}, true, function(_,_,s,i)
                         self.doorStatusIndex = i;
                         if s then
                             if i == 1 then
@@ -888,7 +903,7 @@ function openPersonalMenu()
                             end
                         end
                     end)
-                    RageUI.List('Ouverture des Portes', self.doorOpenList, self.doorOpenIndex, nil, {RightLabel = nil}, true, function(_,a,s,i)
+                    RageUI.List(Traduction.OpenDoorsButtonTitle, self.doorOpenList, self.doorOpenIndex, nil, {RightLabel = nil}, true, function(_,a,s,i)
                         self.doorOpenIndex = i;
                         if s then
                             if i == 1 then
@@ -902,7 +917,7 @@ function openPersonalMenu()
                             end
                         end
                     end)
-                    RageUI.List('Fermeture des Portes', self.doorCloseList, self.doorCloseIndex, nil, {RightLabel = nil}, true, function(_,_,s,i)
+                    RageUI.List(Traduction.CloseDoorsButtonTitle, self.doorCloseList, self.doorCloseIndex, nil, {RightLabel = nil}, true, function(_,_,s,i)
                         self.doorCloseIndex = i;
                         if s then
                             if i == 1 then
@@ -916,7 +931,7 @@ function openPersonalMenu()
                             end
                         end
                     end)
-                    RageUI.List('Capot', self.hoodVehList, self.hoodVehIndex, nil, {RightLabel = nil}, true, function(_,_,s,i)
+                    RageUI.List(Traduction.ActionsHoodButtonTitle, self.hoodVehList, self.hoodVehIndex, nil, {RightLabel = nil}, true, function(_,_,s,i)
                         self.hoodVehIndex = i;
                         if s then
                             if i == 1 then
@@ -926,7 +941,7 @@ function openPersonalMenu()
                             end
                         end
                     end)
-                    RageUI.List('Coffre du Véhicule', self.trunkVehList, self.trunkVehIndex, nil, {RightLabel = nil}, true, function(_,_,s,i)
+                    RageUI.List(Traduction.ActionsTrunkButtonTitle, self.trunkVehList, self.trunkVehIndex, nil, {RightLabel = nil}, true, function(_,_,s,i)
                         self.trunkVehIndex = i;
                         if s then
                             if i == 1 then
@@ -940,8 +955,8 @@ function openPersonalMenu()
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'society_menu'), true, true, true, function()
                     if ESX.PlayerData.job.grade_name == 'boss' then
-                        RageUI.Separator("↓ ~b~Société Légal~s~ ↓")
-                        RageUI.List("Actions", self.societyList, self.societyIndex, nil, {}, true, function(_,a,s,i)
+                        RageUI.Separator(Traduction.LegalSocietySeparator)
+                        RageUI.List(Traduction.ActionsLegalSocietyTitle, self.societyList, self.societyIndex, nil, {}, true, function(_,a,s,i)
                             self.societyIndex = i;
                             if a then
                                 if i == 1 then
@@ -951,7 +966,7 @@ function openPersonalMenu()
                                     if s then
                                         local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                                         if closestPlayer == -1 or closestDistance > 3.0 then
-                                            ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                            ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                                         else
                                             TriggerServerEvent('esx_personalmenu:societyRecrutePlayer', GetPlayerServerId(closestPlayer), ESX.PlayerData.job.name, 0);
                                         end
@@ -964,7 +979,7 @@ function openPersonalMenu()
                                         if s then
                                             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                                             if closestPlayer == -1 or closestDistance > 3.0 then
-                                                ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                                ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                                             else
                                                 TriggerServerEvent('esx_personalmenu:societyPromotePlayer', GetPlayerServerId(closestPlayer));
                                             end
@@ -977,7 +992,7 @@ function openPersonalMenu()
                                             if s then
                                                 local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                                                 if closestPlayer == -1 or closestDistance > 3.0 then
-                                                    ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                                    ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                                                 else
                                                     TriggerServerEvent('esx_personalmenu:societyRemovePlayer', GetPlayerServerId(closestPlayer));
                                                 end
@@ -990,7 +1005,7 @@ function openPersonalMenu()
                                                 if s then
                                                     local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
                                                     if closestPlayer == -1 or closestDistance > 3.0 then
-                                                        ESX.ShowNotification("~r~Aucun joueur à proximité.", true, true, 50);
+                                                        ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
                                                     else
                                                         TriggerServerEvent('esx_personalmenu:societyDemotePlayer', GetPlayerServerId(closestPlayer));
                                                     end
@@ -1001,16 +1016,16 @@ function openPersonalMenu()
                                 end
                             end
                         end)
-                        RageUI.Separator("↓ ~b~Argent Sociétés Légal~s~ ↓")
-                        RageUI.ButtonWithStyle("Argent société :", nil, { RightLabel = "~g~"..societymoney.."$" }, true,function(h,a,s)
+                        RageUI.Separator(Traduction.MoneyLegalSocietySeparator)
+                        RageUI.ButtonWithStyle(Traduction.MoneyLegalSocietyButton, nil, { RightLabel = "~g~"..societymoney.."$" }, true,function(h,a,s)
                         end)
                     end
                 end)
-
+                
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'admin_menu'), true, true, true, function()
-                    RageUI.Checkbox("Activer le Mode Admin", nil, self.InStaff, { Style = RageUI.CheckboxStyle.Tick }, function(_,s,_,c)
-						self.InStaff = c;
+                    RageUI.Checkbox(Traduction.ActiveStaffMod, nil, self.InStaff, { Style = RageUI.CheckboxStyle.Tick }, function(_,s,_,c)
 						if s then
+                            self.InStaff = c;
 							if c then
 								self.InStaff = true;
 							else
@@ -1023,23 +1038,24 @@ function openPersonalMenu()
 							end
 						end
 					end)
-                    RageUI.ButtonWithStyle("Actions staff divers", nil, { RightLabel = "→" }, self.InStaff, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.StaffDiversButtonTitle, nil, { RightLabel = "→" }, self.InStaff, function(_,_,s)
                         if s then
                         end
                     end, RMenu:Get('personal_menu', 'admin_menu_divers'))
-                    RageUI.ButtonWithStyle("Actions staff véhicules", nil, { RightLabel = "→" }, self.InStaff, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.StaffVehicleButtonTitle, nil, { RightLabel = "→" }, self.InStaff, function(_,_,s)
                         if s then
                         end
                     end, RMenu:Get('personal_menu', 'admin_menu_vehicles'))
-                    RageUI.ButtonWithStyle("Liste des joueurs", nil, { RightLabel = "→" }, self.InStaff, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.PlayersListButtonTitle, nil, { RightLabel = "→" }, self.InStaff, function(_,_,s)
                         if s then
+                            TriggerServerEvent('esx_personalmenu:playerListS')
                         end
                     end, RMenu:Get('personal_menu', 'admin_menu_list'))
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'admin_menu_divers'), true, true, true, function()
-                    RageUI.Separator("↓ Actions perso ↓");
-                    RageUI.Checkbox("Noclip", nil, self.noclipC, { Style = RageUI.CheckboxStyle.Tick }, function(_,s,_,c)
+                    RageUI.Separator(Traduction.PersonalActionSeparator);
+                    RageUI.Checkbox(Traduction.NoclipButtonTitle, nil, self.noclipC, { Style = RageUI.CheckboxStyle.Tick }, function(_,s,_,c)
 						self.noclipC = c;
 						if s then
 							if c then
@@ -1064,7 +1080,7 @@ function openPersonalMenu()
 							end
 						end
 					end)
-                    RageUI.Checkbox("Invisible", nil, self.ghostMod, {}, function(_,_,s,c)
+                    RageUI.Checkbox(Traduction.GhostmodButtonTitle, nil, self.ghostMod, {}, function(_,_,s,c)
 						if s then
 							self.ghostMod = c;
 							if c then
@@ -1074,29 +1090,29 @@ function openPersonalMenu()
 							end
 						end
 					end)
-                    RageUI.List("Actions TP", self.tpList, self.tpIndex, nil, {}, true, function(_,a,s,i)
+                    RageUI.List(Traduction.TpActionsButtonTitle, self.tpList, self.tpIndex, nil, {}, true, function(_,a,s,i)
                         self.tpIndex = i;
                         if a then
                             if i == 1 then
                                 if s then
-                                    local player_id = KeyboardInput("ID Du joueur à tp :", "", 10);
+                                    local player_id = KeyboardInput(Config.Keyboard.AdminPlayerId , "", 10);
                                     if (tonumber(player_id)) then
                                         local player_of_args = GetPlayerPed(GetPlayerFromServerId(player_id));
                                         local pCoords = GetEntityCoords(PlayerPedId());
                                         SetEntityCoords(player_of_args, pCoords.x, pCoords.y, pCoords.z);
                                     else
-                                        ESX.ShowNotification("~r~ID incorrect ou champs incorrect !", true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.IdIncorrectOrIncorrectFields, true, true, 50);
                                     end
                                 end
                             else
                                 if i == 2 then
                                     if s then
-                                        local player_id = KeyboardInput("ID Du joueur à tp :", "", 10);
+                                        local player_id = KeyboardInput(Config.Keyboard.AdminPlayerId , "", 10);
                                         if (tonumber(player_id)) then
                                             local player_args_coords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(player_id)));
                                             SetEntityCoords(PlayerPedId(), player_args_coords.x, player_args_coords.y, player_args_coords.z);
                                         else
-                                            ESX.ShowNotification("~r~ID incorrect ou champs incorrect !", true, true, 50);
+                                            ESX.ShowNotification(Config.Notification.IdIncorrectOrIncorrectFields, true, true, 50);
                                         end
                                     end
                                 else
@@ -1117,10 +1133,10 @@ function openPersonalMenu()
                                                         end
                                                     end
                                                     SetPedCoordsKeepVehicle(PlayerPedId(), blipCoords.x, blipCoords.y, zPos)
-                                                    ESX.ShowNotification("~g~Téléportation réussi avec succès !", true, true, 50);
+                                                    ESX.ShowNotification(Config.Notification.TpMarkerWithSuccess, true, true, 50);
                                                 end)
                                             else
-                                                ESX.ShowNotification("~r~Aucun marker trouvé sur la map !", true, true, 50);
+                                                ESX.ShowNotification(Config.Notification.MarkerNotFound, true, true, 50);
                                             end
                                         end
                                     end
@@ -1128,37 +1144,40 @@ function openPersonalMenu()
                             end
                         end
                     end)
-                    RageUI.Separator("↓ Give ↓");
-                    RageUI.List("Give Argent", self.giveList, self.giveIndex, nil, {}, true, function(_,a,s,i)
+                    RageUI.Separator(Traduction.GiveSeparatorTitle);
+                    RageUI.List(Traduction.GiveMoneyListTitle, self.giveList, self.giveIndex, nil, {}, true, function(_,a,s,i)
                         self.giveIndex = i;
                         if a then
                             if i == 1 then
                                 if s then
-                                    local quantity = KeyboardInput("Quantité d\'argent en cash à se give :", "", 100);
+                                    local quantity = KeyboardInput(Config.Keyboard.GiveMoneyCash, "", 100);
                                     if (tonumber(quantity)) then
                                         TriggerServerEvent('esx_personalmenu:giveMoneyCash', tonumber(quantity));
+                                        TriggerServerEvent('esx_personalmenu:logGiveMoneyCash', tonumber(quantity));
                                     else
-                                        ESX.ShowNotification("~r~Les champs sont incorrect !", true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                                     end
                                 end
                             else
                                 if i == 2 then
                                     if s then
-                                        local quantity = KeyboardInput("Quantité d\'argent en banque à se give :", "", 100);
+                                        local quantity = KeyboardInput(Config.Keyboard.GiveMoneyBank , "", 100);
                                         if (tonumber(quantity)) then
                                             TriggerServerEvent('esx_personalmenu:giveMoneyBank', tonumber(quantity));
+                                            TriggerServerEvent('esx_personalmenu:logGiveMoneyBank', tonumber(quantity));
                                         else
-                                            ESX.ShowNotification("~r~Les champs sont incorrect !", true, true, 50);
+                                            ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                                         end
                                     end
                                 else
                                     if i == 3 then
                                         if s then
-                                            local quantity = KeyboardInput("Quantité d\'argent sale à se give :", "", 100);
+                                            local quantity = KeyboardInput(Config.Keyboard.GiveBlackMoney, "", 100);
                                             if (tonumber(quantity)) then
                                                 TriggerServerEvent('esx_personalmenu:giveBlackMoney', tonumber(quantity));
+                                                TriggerServerEvent('esx_personalmenu:logGiveBlackMoney', tonumber(quantity));
                                             else
-                                                ESX.ShowNotification("~r~Les champs sont incorrect !", true, true, 50);
+                                                ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                                             end
                                         end
                                     end
@@ -1166,18 +1185,19 @@ function openPersonalMenu()
                             end
                         end
                     end)
-                    RageUI.Separator("↓ Affichage ↓");
-                    RageUI.Checkbox("Afficher les Noms", nil, self.showNames, {},function(_,_,s,c)
+                    RageUI.Separator(Traduction.ShowSeparatorTitle);
+                    RageUI.Checkbox(Traduction.ShowNamesButtonTitle, nil, self.showNames, {},function(_,_,s,c)
 						if s then
 							self.showNames = c;
 							if c then
 								self.showNames = true;
+                                TriggerServerEvent('esx_personalmenu:logShowNames')
 							else
 								self.showNames = false;
 							end
 						end
 					end)
-                    RageUI.ButtonWithStyle("Print les coordoonnées", nil, {RightLabel = "→→"}, true, function(_,_,s)
+                    RageUI.ButtonWithStyle(Traduction.PrintCoordsButtonTitle, nil, {RightLabel = "→→"}, true, function(_,_,s)
                         if s then
                             local pCoords = GetEntityCoords(PlayerPedId());
                             local pHeading = GetEntityHeading(PlayerPedId());
@@ -1187,10 +1207,89 @@ function openPersonalMenu()
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'admin_menu_vehicles'), true, true, true, function()
-
+                    RageUI.Separator(Traduction.MyVehSepratorTitle);
+                    RageUI.List(Traduction.ActionsVehicleListTitle, self.vehicleAdminList, self.vehicleAdminIndex, nil, {}, true, function(_,a,s,i)
+                        self.vehicleAdminIndex = i;
+                        if a then
+                            if i == 1 then
+                                if s then
+                                    local veh_name = KeyboardInput(Config.Keyboard.VehicleNameSpawn, "", 100);
+                                    if veh_name ~= nil then
+                                        local modelVeh = GetHashKey(veh_name);
+                                        RequestModel(modelVeh);
+                                        while not HasModelLoaded(modelVeh) do RequestModel(modelVeh) Citizen.Wait(10) end
+                                        local pCoords = GetEntityCoords(PlayerPedId());
+                                        local createVeh = CreateVehicle(modelVeh, pCoords.x +2.5, pCoords.y + 2.5, pCoords.z, 180.0, true, false);
+                                        TaskWarpPedIntoVehicle(PlayerPedId(), createVeh, -1);
+                                        ESX.ShowNotification(Config.Notification.VehicleAdminSpawn.." "..veh_name..".", true, true, 50);
+                                    else
+                                        ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
+                                    end
+                                end
+                            else
+                                if i == 2 then
+                                    if s then
+                                        if IsPedSittingInAnyVehicle(PlayerPedId()) then
+                                            SetVehicleFixed(GetVehiclePedIsIn(PlayerPedId()));
+                                            WashDecalsFromVehicle(GetVehiclePedIsUsing(PlayerPedId()), 1.0);
+                                            SetVehicleDirtLevel(GetVehiclePedIsUsing(PlayerPedId()));
+                                            ESX.ShowNotification(Config.Notification.VehicleAdminFixed, true, true, 50);
+                                        else
+                                            ESX.ShowNotification(Config.Notification.IfNotIsInVehicle, true, true, 50);
+                                        end
+                                    end
+                                else
+                                    if i == 3 then
+                                        if s then
+                                            if GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false))*3.6 > 1.0 then
+                                                ESX.ShowNotification(Config.Notification.StopVehicleReturn, true, true, 50);
+                                            else
+                                                if IsPedSittingInAnyVehicle(PlayerPedId()) then
+                                                    local pVeh = GetVehiclePedIsIn(PlayerPedId())
+                                                    ApplyForceToEntity(pVeh, 3, 0.0, 0.0, 10.5, 360.0, 0.0, 0.0, 0, 0, 1, 1, 0, 1)
+                                                else
+                                                    ESX.ShowNotification(Config.Notification.IfNotIsInVehicle, true, true, 50);
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end)
+                    RageUI.Separator(Traduction.DistanceVehicleSeparatorTitle);
+                    RageUI.ButtonWithStyle(Traduction.DeleteVehicleButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
+                        if a then
+                            local closestVeh = GetClosestVehicle();
+                            local posVeh = GetEntityCoords(closestVeh)
+                            DrawMarker(21, posVeh.x, posVeh.y, posVeh.z+1.5, 1.0, 0.0, 1.0, 5.0, 0.0, 0.0, 0.35, 0.35, 0.35, 0, 255, 31, 255, 5, 1, 2, 0, nil, nil, 0);
+                        end
+                        if s then
+                            local closestVeh = GetClosestVehicle();
+                            if not DoesEntityExist(closestVeh) then 
+                                return ESX.ShowNotification(Config.Notification.NotFoundVehicle, true, true, 50);
+                            else
+                                DeleteVehicleDistance(closestVeh);
+                            end 
+                        end
+                    end);
                 end)
 
                 RageUI.IsVisible(RMenu:Get('personal_menu', 'admin_menu_list'), true, true, true, function()
+                    RageUI.Checkbox(Traduction.ZoneOnlyButtonTitle, nil, self.playersInZone, {}, function(_,_,_,c)
+                        self.playersInZone = c;
+                    end)
+                    if not self.playersInZone then
+                        for k,v in pairs(self.playersList) do
+                            RageUI.ButtonWithStyle("["..v.id.."] - "..v.name, nil, {RightLabel = nil}, true, function(_,_,_)
+                            end)
+                        end
+                    else
+                        for k,v in pairs(GetActivePlayers()) do
+                            RageUI.ButtonWithStyle("["..GetPlayerServerId(v).."] - "..GetPlayerName(v), nil, {RightLabel = nil}, true, function(_,_,_)
+                            end)
+                        end
+                    end
                 end)
             end
         end)
@@ -1217,7 +1316,7 @@ function AddBannerColor()
             end
         end
         for k,v in pairs(AllMenuToChange) do
-            RMenu:Get('personal_menu', v):SetRectangleBanner(Config.MenuBannerColor[1], Config.MenuBannerColor[2], Config.MenuBannerColor[3], Config.MenuBannerColor[4]);
+            RMenu:Get('personal_menu', v):SetRectangleBanner(Config.MenuBannerColor.r, Config.MenuBannerColor.g, Config.MenuBannerColor.b, Config.MenuBannerColor.opacity);
         end
     end)
 end

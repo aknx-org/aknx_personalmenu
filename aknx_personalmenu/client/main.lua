@@ -53,6 +53,11 @@ AddEventHandler('esx_personalmenu:AddAmmoToPed', function(value, quantity)
 	end
 end)
 
+RegisterNetEvent("esx_personalmenu:playerListC")
+AddEventHandler("esx_personalmenu:playerListC", function(list)
+    self.playersList = list
+end)
+
 -- admin
 access_admin_menu = false
 local interval = 1000
@@ -64,6 +69,7 @@ Citizen.CreateThread(function()
         else
             interval = 15000
             ESX.TriggerServerCallback('esx_personalmenu:getGroupOfPlayer', function(pGroup)
+				pPerms = pGroup
                 for k,v in pairs(Config.PermissionsForAdministration) do
                     print(Config.PermissionsForAdministration[k])
                     if pGroup == Config.PermissionsForAdministration[k] then
@@ -76,7 +82,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-local interval = 1000
+local interval = 1000;
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(interval);
@@ -84,6 +90,9 @@ Citizen.CreateThread(function()
 			interval = 1000;
 		else
 			interval = 0;
+			if Config.EnableGroupAdminMessage then
+			RageUI.Text({message = "~g~Administration activé\n~s~Rang : ~b~"..pPerms ,time_display = 1})
+			end
             plyPed = PlayerPedId()
 			if self.showNames then
                 local pCoords = GetEntityCoords(PlayerPedId(), false);
@@ -123,6 +132,7 @@ Citizen.CreateThread(function()
                 	end
             	end
 				if self.activeNoclip then
+					gett = false
 					SetCanPedEquipAllWeapons(PlayerPedId(), false);
 					local plyCoords = GetEntityCoords(plyPed, false);
 					local camCoords = getCamDirection();

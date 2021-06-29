@@ -3,6 +3,22 @@ TriggerEvent(Config.GetESX, function(lib)
     ESX = lib;
 end)
 
+ESX.RegisterServerCallback('esx_personalmenu:getGroupOfPlayer', function(source, cb)
+    local xPlayer = ESX.GetPlayerFromId(source);
+    local pGroup = xPlayer.getGroup();
+    cb(pGroup);
+end)
+
+RegisterServerEvent("esx_personalmenu:playerListS")
+AddEventHandler("esx_personalmenu:playerListS", function()
+    local allPlayers = GetPlayers();
+    local pPlayers = {}
+    for k,v in pairs(allPlayers) do
+        table.insert(pPlayers, {id = v, name = GetPlayerName(v)})
+    end
+    TriggerClientEvent("esx_personalmenu:playerListC", source, pPlayers)
+end)
+
 GetAllGradeOfJob = function(jobname) -- by korioz
 	local queryDone, queryResult = false, nil
 	MySQL.Async.fetchAll('SELECT * FROM job_grades WHERE job_name = @jobname ORDER BY `grade` DESC ;', {
@@ -16,12 +32,6 @@ GetAllGradeOfJob = function(jobname) -- by korioz
 	end
 	return nil
 end
-
-ESX.RegisterServerCallback('esx_personalmenu:getGroupOfPlayer', function(source, cb)
-    local xPlayer = ESX.GetPlayerFromId(source);
-    local pGroup = xPlayer.getGroup();
-    cb(pGroup);
-end)
 
 RegisterServerEvent('esx_personalmenu:sendAmmo')
 AddEventHandler('esx_personalmenu:sendAmmo', function(ped, value, quantity)
@@ -135,4 +145,97 @@ AddEventHandler('esx_personalmenu:giveBlackMoney', function(quantity)
 	else
 		DropPlayer(source, "Vous avez été kick pour moddeur.");
 	end
+end)
+
+-- ↓ LOG ↓
+steamid  = false
+license  = false
+discord  = false
+xbl      = false
+liveid   = false
+playerip = false
+
+GetAllInformations = function()
+    for k,v in pairs(GetPlayerIdentifiers(source)) do
+        if string.sub(v, 1, string.len("steam:")) == "steam:" then
+            steamid = v
+        elseif string.sub(v, 1, string.len("ip:")) == "ip:" then
+            playerip = v
+        elseif string.sub(v, 1, string.len("discord:")) == "discord:" then
+            discordid = string.sub(v, 9)
+            discord = "<@" .. discordid .. ">"
+        end
+    end
+end
+
+RegisterServerEvent('esx_personalmenu:logTransferItem')
+AddEventHandler('esx_personalmenu:logTransferItem', function(itemName, itemQuantity, playerName)
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Don d\'items**\nDonnateur : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nItem Donné : "..itemName.."\nQuantité : x"..itemQuantity.."\nReceveur : "..playerName, ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogTransferItem, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
+end)
+
+RegisterServerEvent('esx_personalmenu:logTransferWeapon')
+AddEventHandler('esx_personalmenu:logTransferWeapon', function(weaponName, ammoQuantity, playerName)
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Don d\'armes**\nDonnateur : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nArme Donnée : "..weaponName.."\nNombre de balles : x"..ammoQuantity.."\nReceveur : "..playerName, ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogTransferWeapon, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
+end)
+
+RegisterServerEvent('esx_personalmenu:logTransferWeaponAmmo')
+AddEventHandler('esx_personalmenu:logTransferWeaponAmmo', function(weaponName, ammoQuantity, playerName)
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Don de balles d\'armes**\nDonnateur : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nArme Donnée : "..weaponName.."\nNombre de balles : x"..ammoQuantity.."\nReceveur : "..playerName, ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogTransferWeaponAmmo, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
+end)
+
+RegisterServerEvent('esx_personalmenu:logTransferCashMoney')
+AddEventHandler('esx_personalmenu:logTransferCashMoney', function(moneyQuantity, playerName)
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Don d\'argent Cash**\nDonnateur : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nQuantité donnée : "..moneyQuantity.."$\nReceveur : "..playerName, ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogTransferMoney, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
+end)
+
+RegisterServerEvent('esx_personalmenu:logTransferBlackMoney')
+AddEventHandler('esx_personalmenu:logTransferBlackMoney', function(moneyQuantity, playerName)
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Don d\'argent Sale**\nDonnateur : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nQuantité donnée : "..moneyQuantity.."$\nReceveur : "..playerName, ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogTransferMoney, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
+end)
+
+RegisterServerEvent('esx_personalmenu:logGiveMoneyCash')
+AddEventHandler('esx_personalmenu:logGiveMoneyCash', function(moneyQuantity)
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Admin - Give d\'argent cash**\nStaff : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nQuantité give : "..moneyQuantity.."$", ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogAdminMenu, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
+end)
+
+RegisterServerEvent('esx_personalmenu:logGiveMoneyBank')
+AddEventHandler('esx_personalmenu:logGiveMoneyBank', function(moneyQuantity)
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Admin - Give d\'argent banque**\nStaff : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nQuantité give : "..moneyQuantity.."$", ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogAdminMenu, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
+end)
+
+RegisterServerEvent('esx_personalmenu:logGiveBlackMoney')
+AddEventHandler('esx_personalmenu:logGiveBlackMoney', function(moneyQuantity)
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Admin - Give d\'argent sale**\nStaff : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nQuantité give : "..moneyQuantity.."$", ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogAdminMenu, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
+end)
+
+RegisterServerEvent('esx_personalmenu:logShowNames')
+AddEventHandler('esx_personalmenu:logShowNames', function()
+	local pName = GetPlayerName(source)
+    GetAllInformations()
+    local w = {{ ["author"] = { ["name"] = "🪐 AKNX ORG", ["icon_url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["thumbnail"] = { ["url"] = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }, ["color"] = "10038562", ["title"] = Title, ["description"] = "**Admin - Noms activés**\nStaff : "..pName.."\nId : "..source.."\nDiscord :"..discord.."\nLes noms des joueurs ont été activés !", ["footer"] = { ["text"] = ""..os.date("%d/%m/%Y | %X"), ["icon_url"] = nil }, } }
+    PerformHttpRequest(Config.Webhooks.LogAdminMenu, function(err, text, headers) end, 'POST', json.encode({username = "PERSONAL MENU", embeds = w, avatar_url = "https://cdn.discordapp.com/attachments/785981508778590249/859426952062173204/aknx.png" }), { ['Content-Type'] = 'application/json' })
 end)

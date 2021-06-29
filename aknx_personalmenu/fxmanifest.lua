@@ -20,8 +20,8 @@ client_scripts {
     "RageUI_Source/client/menu/items/*.lua",
     "RageUI_Source/client/menu/panels/*.lua",
     "RageUI_Source/client/menu/windows/*.lua",
-    -- ↓ PersonalMenu Config Menu Buttons ↓
-    'config_buttons.lua',
+    -- ↓ PersonalMenu Config Traduction ↓
+    'traduction.lua',
     -- ↓ PersonalMenu Client ↓
     'shared/commands.lua',
     'shared/keymapping.lua',
@@ -31,6 +31,8 @@ client_scripts {
 server_scripts {
     -- ↓ MySQL-Async ↓
     '@mysql-async/lib/MySQL.lua',
+    -- ↓ PersonalMenu Webhooks Config ↓
+    'shared/config_webhooks.lua',
     -- ↓ PersonalMenu Server ↓
     'server/server.lua'
 }
