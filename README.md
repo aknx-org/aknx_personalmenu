@@ -24,7 +24,7 @@
 <h2> ⛏️ How to use / start ? </h2>
 - Download this repo. <br>
 - Open your download, and go to english or french. <br>
-- You have " aknx_personalmenu-main " folder, rename in " aknx_personalmenu ". <br>
+- You have " aknx_personalmenu " folder. <br>
 - Push this folder in your resources folder. <br>
 - Then, go to your server.cfg and : <br>
 - ensure aknx_personalmenu <br>
