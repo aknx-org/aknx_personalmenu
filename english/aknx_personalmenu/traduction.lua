@@ -10,7 +10,7 @@ Config.EnableSociety        = true
 Config.EnableAdmin          = true
 
 -- Main Menu
-Traduction.InventoryButtonTitle     = "Inventaire"
+Traduction.InventoryButtonTitle     = "Inventory"
 Traduction.WeaponGestionButtonTitle = "Weapons Management"
 Traduction.WalletButtonTitle        = "Wallet"
 Traduction.BillingButtonTitle       = "Billing"

@@ -6,7 +6,7 @@ Config.Webhooks = {}
 
 Config.GetESX = 'esx:getSharedObject'
 
-Config.YourServerName = "AKNX" -- Title of the personal menu
+Config.YourServerName = "TEST" -- Title of the personal menu
 Config.DescriptionMenu = "MENU PERSONNEL" -- Description of the personal menu
 Config.MenuBannerColor = { -- The color of the banner of the menu, in R,G,B, OPACITY, check this website --> https://htmlcolorcodes.com/fr/
     r = 0, -- red
@@ -22,7 +22,7 @@ Config.PermissionsForAdministration = { -- permissions authorized for access to 
 Config.EnableGroupAdminMessage = true -- for active a message when staff mod is enabled
 Config.CanDropItem = true -- for drop an item of player inventory
 Config.CanDropWeapon = true -- for drop an weapon of player inventory
-Config.EnableDoubleJob = true -- job 2 and not org
+Config.EnableDoubleJob = false -- job 2 and not org
 Config.HaveDpEmotes = true -- put true if you have dpemotes on your server
 Config.EnableNotification = true -- for active notification when you do an action, put false for disabled if you have notif with other scripts.
 

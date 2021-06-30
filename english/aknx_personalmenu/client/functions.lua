@@ -39,18 +39,7 @@ KeyboardInput = function(textEntry, inputText, maxLength)
     end
 end
 
-CheckQuantity = function(number)
-    number = tonumber(number);
-    if type(number) == 'number' then
-        number = ESX.Math.Round(number);
-        if number > 0 then
-            return true, number;
-        end
-    end
-    return false, number;
-end
-
-function startAnimation(lib, anim)
+startAnimation = function(lib, anim)
 	ESX.Streaming.RequestAnimDict(lib, function()
 		TaskPlayAnim(PlayerPedId(), lib, anim, 8.0, 1.0, -1, 49, 0, false, false, false)
 		RemoveAnimDict(lib)
@@ -71,10 +60,10 @@ end
 entityEnumerator = {
 	__gc = function(enum)
 		if enum.destructor and enum.handle then
-			enum.destructor(enum.handle)
+			enum.destructor(enum.handle);
 		end
-		enum.destructor = nil
-		enum.handle = nil
+		enum.destructor = nil;
+		enum.handle = nil;
 	end
 }
 
@@ -82,50 +71,50 @@ EnumerateEntities = function(initFunc, moveFunc, disposeFunc)
 	return coroutine.wrap(function()
 		local iter, id = initFunc()
 		if not id or id == 0 then
-			disposeFunc(iter)
+			disposeFunc(iter);
 			return
 		end
 		local enum = {handle = iter, destructor = disposeFunc}
-		setmetatable(enum, entityEnumerator)
+		setmetatable(enum, entityEnumerator);
 		local next = true
 		repeat
 		coroutine.yield(id)
 		next, id = moveFunc(iter)
 		until not next
 		enum.destructor, enum.handle = nil, nil
-		disposeFunc(iter)
+		disposeFunc(iter);
 	end)
 end
 
 function EnumerateObjects()
-	return EnumerateEntities(FindFirstObject, FindNextObject, EndFindObject)
+	return EnumerateEntities(FindFirstObject, FindNextObject, EndFindObject);
 end
 
 function EnumeratePeds()
-	return EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed)
+	return EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed);
 end
 
 function EnumerateVehicles()
-	return EnumerateEntities(FindFirstVehicle, FindNextVehicle, EndFindVehicle)
+	return EnumerateEntities(FindFirstVehicle, FindNextVehicle, EndFindVehicle);
 end
 
 function EnumeratePickups()
-	return EnumerateEntities(FindFirstPickup, FindNextPickup, EndFindPickup)
+	return EnumerateEntities(FindFirstPickup, FindNextPickup, EndFindPickup);
 end
 
 function GetVehicleInDirection(coordFrom, coordTo)
-	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
-	local a, b, c, d, vehicle = GetRaycastResult(rayHandle)
-	return vehicle
+	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0);
+	local a, b, c, d, vehicle = GetRaycastResult(rayHandle);
+	return vehicle;
 end
 
 DeleteVehicle = function()
     local vehicle = ESX.Game.GetVehicleInDirection();
     if IsPedInAnyVehicle(PlayerPedId(), true) then
-        vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+        vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
     end
     if DoesEntityExist(vehicle) then
-        ESX.Game.DeleteVehicle(vehicle)
+        ESX.Game.DeleteVehicle(vehicle);
     end
 end
 

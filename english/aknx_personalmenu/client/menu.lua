@@ -5,27 +5,27 @@ self = {
     black_money       = nil,
     billing_table = {},
     headClothesIndex  = 1,
-    clothesHeadList   = { "Helmet", "Mask", "Ears", "Glasses" },
+    clothesHeadList   = { "Chapeau/Casque", "Masque", "Oreilles", "Lunettes" },
     hightClothesIndex = 1,
-    clothesHightList  = { "Upper", "Bullet proof", "Bags", "Arms", "Watches", "Bracelets", "Chains", "Decals" },
+    clothesHightList  = { "Haut", "Gilet Par Balles", "Sac", "Bras", "Montre", "Bracelet", "Chaines", "Calques" },
     downClothesIndex  = 1,
-    clothesDownList   = { "Pants", "Shoes" },
+    clothesDownList   = { "Pantalon", "Chaussures" },
     windowVehIndex = 1,
-    windowVehList = { "Open", "Close" },
+    windowVehList = { "Ouvrir", "Fermer" },
     doorStatusIndex = 1,
-    doorStatusList = { "Open", "Close" },
+    doorStatusList = { "Ouvrir", "Fermer" },
     doorOpenIndex = 1,
-    doorOpenList = { "Right front", "Left front", "Right Back", "Right left" },
+    doorOpenList = { "Avant Droit", "Avant Gauche", "Arrière Droit", "Arrière Gauche" },
     doorCloseIndex = 1,
-    doorCloseList = { "Right front", "Left front", "Right Back", "Right left" },
+    doorCloseList = { "Avant Droit", "Avant Gauche", "Arrière Droit", "Arrière Gauche" },
     hoodVehIndex = 1,
-    hoodVehList = { "Open", "Close" },
+    hoodVehList = { "Ouvrir", "Fermer" },
     trunkVehIndex = 1,
-    trunkVehList = { "Open", "Close" },
+    trunkVehList = { "Ouvrir", "Fermer" },
     societyIndex = 1,
-    societyList = { '~g~Recruit~s~', '~g~Promote~s~', '~r~Remove~s~', '~r~Dismissed~s~' },
+    societyList = { '~g~Recruter~s~', '~g~Promouvoir~s~', '~r~Destituer~s~', '~r~Virer~s~' },
     societyIndex2 = 1,
-    societyList2 = { '~g~Recruit~s~', '~g~Promote~s~', '~r~Remove~s~', '~r~Dismissed~s~' },
+    societyList2 = { '~g~Recruter~s~', '~g~Promouvoir~s~', '~r~Destituer~s~', '~r~Virer~s~' },
     InStaff = false,
     playersList = {},
     playersInZone = false,
@@ -35,13 +35,13 @@ self = {
     noclipCollision = false,
     ghostMod = false,
     tpIndex = 1,
-    tpList = { "Tp player on me", "Tp at player", "Tp on marker" },
+    tpList = { "Tp sur joueur", "Tp sur marker" },
     giveIndex = 1,
-    giveList = { "Cash", "Bank", "Black" },
+    giveList = { "Cash", "Banque", "Sale" },
     showNames = false,
     gamerTags = {},
     vehicleAdminIndex = 1,
-    vehicleAdminList = {"Spawn an vehicle", "Fix the vehicle", "Return the vehicle" },
+    vehicleAdminList = {"Spawn un véhicule", "Réparer le véhicule", "Retourner le véhicule" },
 };
 
 openF5Menu = false;
@@ -181,16 +181,16 @@ function openPersonalMenu()
                             PlayerMarker();
                         end
                         if s then
-                            local quantity = KeyboardInput('Quantity of'..self.itemSelected.label..' to send :', "", 25);
+                            local quantity = KeyboardInput('Quantity of '..self.itemSelected.label..' to send :', "", 25);
                             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
                             if tonumber(quantity) then
                                 if closestDistance ~= -1 and closestDistance <= 3 then
                                     local cPed = GetPlayerPed(closestPlayer);
                                     if IsPedOnFoot(cPed) then
-                                        TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_standard', self.itemSelected.name, quantity);
+                                        TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_standard', self.itemSelected.name, tonumber(quantity));
                                         Citizen.Wait(150);
                                         RageUI:GoBack();
-                                        ESX.ShowNotification(Config.Notification.TransferItem..""..quantity.."~b~"..self.itemSelected.label.."~s~à ~p~"..GetPlayerName(closestPlayer), true, true, 50);
+                                        ESX.ShowNotification(Config.Notification.TransferItem..""..quantity.." ~b~"..self.itemSelected.label.." ~s~à ~p~"..GetPlayerName(closestPlayer), true, true, 50);
                                         TriggerServerEvent('esx_personalmenu:logTransferItem', self.itemSelected.name, quantity, GetPlayerName(closestPlayer));
                                     else
                                         ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
@@ -250,47 +250,17 @@ function openPersonalMenu()
                                 if IsPedOnFoot(cPed) then
                                     local weapon_ammo = GetAmmoInPedWeapon(PlayerPedId(), self.weaponSelected.hash)
                                     TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_weapon', self.weaponSelected.name, weapon_ammo);
-                                    TriggerServerEvent('esx_personalmenu:logTransferWeapon', self.weaponSelected.name, weapon_ammo, GetPlayerName(closestPlayer))
+                                    TriggerServerEvent('esx_personalmenu:logTransferWeapon', self.weaponSelected.name, weapon_ammo, GetPlayerName(closestPlayer));
+                                    if Config.EnableNotification then
+                                        ESX.ShowNotification(Config.Notification.SendWeapon.." x1 "..self.weaponSelected.label.." a "..GetPlayerName(closestPlayer), true, true, 50);
+                                    end
+                                    Citizen.Wait(150);
+                                    RageUI:GoBack();
                                 else
-                                    ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50) ;
+                                    ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                 end
                             else
                                 ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
-                            end
-                        end
-                    end)
-                    RageUI.ButtonWithStyle(Traduction.SendAmmoButtonTitle, nil, {RightLabel = "→→"}, true, function(_,a,s)
-                        if a then
-                            PlayerMarker();
-                        end
-                        if s then
-                            local quantity = KeyboardInput('Ammos quantity of '..self.weaponSelected.label..' to send :', "", 25);
-                            if tonumber(quantity) then
-                                local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
-                                if closestDistance ~= -1 and closestDistance <= 3 then
-                                    local cPed = GetPlayerPed(closestPlayer);
-                                    if IsPedOnFoot(cPed) then
-                                        local get_ammo = GetAmmoInPedWeapon(PlayerPedId(), self.weaponSelected.hash);
-                                        if get_ammo > 0 then
-                                            if quantity <= get_ammo and quantity >= 0 then
-                                                SetPedAmmo(PlayerPedId(), self.weaponSelected.name, math.floor(get_ammo - quantity));
-                                                TriggerServerEvent('esx_personalmenu:sendAmmo', GetPlayerServerId(closestPlayer), self.weaponSelected.name, quantity);
-                                                ESX.ShowNotification(Config.Notification.SendAmmo..""..quantity.." munitions de  "..self.weaponSelected.label.." à "..GetPlayerName(closestPlayer)..".", true, true, 50)
-                                                TriggerServerEvent('esx_personalmenu:logTransferWeaponAmmo', self.weaponSelected.name, quantity, GetPlayerName(closestPlayer))
-                                            else
-                                                ESX.ShowNotification(Config.Notification.DontHaveAmmo , true, true, 50);
-                                            end
-                                        else
-                                            ESX.ShowNotification(Config.Notification.DontHaveAmmo2, true, true, 50);
-                                        end
-                                    else
-                                        ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
-                                    end
-                                else
-                                    ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
-                                end
-                            else
-                                ESX.ShowNotification(Config.Notification.IncorrectFields, true, true, 50);
                             end
                         end
                     end)
@@ -370,7 +340,7 @@ function openPersonalMenu()
                                         TriggerServerEvent('esx_personalmenu:TransferCashMoney', GetPlayerServerId(closestPlayer), tonumber(quantity));
                                         Citizen.Wait(150);
                                         RageUI:GoBack();
-                                        TriggerServerEvent('esx_personalmenu:logTransferCashMoney', quantity, GetPlayerName(closestPlayer));
+                                        TriggerServerEvent('esx_personalmenu:logTransferCashMoney', tonumber(quantity), GetPlayerName(closestPlayer));
                                     else
                                         ESX.ShowNotification(Config.Notification.ActionNotPossibleInVehicle, true, true, 50);
                                     end
@@ -1020,10 +990,10 @@ function openPersonalMenu()
                         end)
                     end
                     if Config.EnableDoubleJob then
-                        if ESX.PlayerData.job2.grade_name == 'boss' then
+                    if ESX.PlayerData.job2.grade_name == 'boss' then
                             RageUI.Separator(Traduction.MoneyIllegalSocietySeparator)
-                            RageUI.List(Traduction.ActionsIllegalSocietyTitle, self.societyList, self.societyIndex, nil, {}, true, function(_,a,s,i)
-                                self.societyIndex = i;
+                            RageUI.List(Traduction.ActionsIllegalSocietyTitle, self.societyList2, self.societyIndex2, nil, {}, true, function(_,a,s,i)
+                                self.societyIndex2 = i;
                                 if a then
                                     if i == 1 then
                                         if a then
@@ -1164,9 +1134,7 @@ function openPersonalMenu()
                                 if s then
                                     local player_id = KeyboardInput(Config.Keyboard.AdminPlayerId , "", 10);
                                     if (tonumber(player_id)) then
-                                        local player_of_args = GetPlayerPed(GetPlayerFromServerId(player_id));
-                                        local pCoords = GetEntityCoords(PlayerPedId());
-                                        SetEntityCoords(player_of_args, pCoords.x, pCoords.y, pCoords.z);
+                                        TriggerServerEvent('esx_personalmenu:bringPlayer', GetPlayerServerId(PlayerId()), player_id)
                                     else
                                         ESX.ShowNotification(Config.Notification.IdIncorrectOrIncorrectFields, true, true, 50);
                                     end
@@ -1174,37 +1142,25 @@ function openPersonalMenu()
                             else
                                 if i == 2 then
                                     if s then
-                                        local player_id = KeyboardInput(Config.Keyboard.AdminPlayerId , "", 10);
-                                        if (tonumber(player_id)) then
-                                            local player_args_coords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(player_id)));
-                                            SetEntityCoords(PlayerPedId(), player_args_coords.x, player_args_coords.y, player_args_coords.z);
-                                        else
-                                            ESX.ShowNotification(Config.Notification.IdIncorrectOrIncorrectFields, true, true, 50);
-                                        end
-                                    end
-                                else
-                                    if i == 3 then
-                                        if s then
-                                            local blip_on_map = GetFirstBlipInfoId(8)
-                                            if DoesBlipExist(blip_on_map) then
-                                                Citizen.CreateThread(function()
-                                                    local blipCoords = GetBlipInfoIdCoord(blip_on_map)
-                                                    local foundGround, zCoords, zPos = false, -500.0, 0.0
-                                                    while not foundGround do
-                                                        zCoords = zCoords + 10.0
-                                                        RequestCollisionAtCoord(blipCoords.x, blipCoords.y, zCoords)
-                                                        Citizen.Wait(0)
-                                                        foundGround, zPos = GetGroundZFor_3dCoord(blipCoords.x, blipCoords.y, zCoords)
-                                                        if not foundGround and zCoords >= 2000.0 then
-                                                            foundGround = true
-                                                        end
+                                        local blip_on_map = GetFirstBlipInfoId(8)
+                                        if DoesBlipExist(blip_on_map) then
+                                            Citizen.CreateThread(function()
+                                                local blipCoords = GetBlipInfoIdCoord(blip_on_map)
+                                                local foundGround, zCoords, zPos = false, -500.0, 0.0
+                                                while not foundGround do
+                                                    zCoords = zCoords + 10.0
+                                                    RequestCollisionAtCoord(blipCoords.x, blipCoords.y, zCoords)
+                                                    Citizen.Wait(0)
+                                                    foundGround, zPos = GetGroundZFor_3dCoord(blipCoords.x, blipCoords.y, zCoords)
+                                                    if not foundGround and zCoords >= 2000.0 then
+                                                        foundGround = true
                                                     end
-                                                    SetPedCoordsKeepVehicle(PlayerPedId(), blipCoords.x, blipCoords.y, zPos)
-                                                    ESX.ShowNotification(Config.Notification.TpMarkerWithSuccess, true, true, 50);
-                                                end)
-                                            else
-                                                ESX.ShowNotification(Config.Notification.MarkerNotFound, true, true, 50);
-                                            end
+                                                end
+                                                SetPedCoordsKeepVehicle(PlayerPedId(), blipCoords.x, blipCoords.y, zPos)
+                                                ESX.ShowNotification(Config.Notification.TpMarkerWithSuccess, true, true, 50);
+                                            end)
+                                        else
+                                            ESX.ShowNotification(Config.Notification.MarkerNotFound, true, true, 50);
                                         end
                                     end
                                 end

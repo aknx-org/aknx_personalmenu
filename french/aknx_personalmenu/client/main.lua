@@ -51,12 +51,10 @@ AddEventHandler('esx:playerLoaded', function(xPlayer)
 	ESX.PlayerData = xPlayer;
 end)
 
-RegisterNetEvent('esx_personalmenu:AddAmmoToPed')
-AddEventHandler('esx_personalmenu:AddAmmoToPed', function(value, quantity)
-	local weapon_hash = GetHashKey(value)
-	if HasPedGotWeapon(ped, weapon_hash, false) and value ~= 'WEAPON_UNARMED' then
-		AddAmmoToPed(ped, value, quantity)
-	end
+RegisterNetEvent("esx_personalmenu:bringPlayer2")
+AddEventHandler("esx_personalmenu:bringPlayer2", function(coords)
+	SetEntityCoords(PlayerPedId(), coords)
+
 end)
 
 RegisterNetEvent("esx_personalmenu:playerListC")

@@ -51,17 +51,15 @@ AddEventHandler('esx:playerLoaded', function(xPlayer)
 	ESX.PlayerData = xPlayer;
 end)
 
-RegisterNetEvent('esx_personalmenu:AddAmmoToPed')
-AddEventHandler('esx_personalmenu:AddAmmoToPed', function(value, quantity)
-	local weapon_hash = GetHashKey(value);
-	if HasPedGotWeapon(ped, weapon_hash, false) and value ~= 'WEAPON_UNARMED' then
-		AddAmmoToPed(ped, value, quantity);
-	end
+RegisterNetEvent("esx_personalmenu:bringPlayer2")
+AddEventHandler("esx_personalmenu:bringPlayer2", function(coords)
+	SetEntityCoords(PlayerPedId(), coords)
+
 end)
 
 RegisterNetEvent("esx_personalmenu:playerListC")
 AddEventHandler("esx_personalmenu:playerListC", function(list)
-    self.playersList = list;
+    self.playersList = list
 end)
 
 -- admin
@@ -75,7 +73,7 @@ Citizen.CreateThread(function()
         else
             interval = 15000;
             ESX.TriggerServerCallback('esx_personalmenu:getGroupOfPlayer', function(pGroup)
-				pPerms = pGroup;
+				pPerms = pGroup
                 for k,v in pairs(Config.PermissionsForAdministration) do
                     if pGroup == Config.PermissionsForAdministration[k] then
                         access_admin_menu = true;
@@ -98,7 +96,7 @@ Citizen.CreateThread(function()
 			if Config.EnableGroupAdminMessage then
 			RageUI.Text({message = "~g~Administration activé\n~s~Rang : ~b~"..pPerms ,time_display = 1});
 			end
-            plyPed = PlayerPedId();
+            plyPed = PlayerPedId()
 			if self.showNames then
                 local pCoords = GetEntityCoords(PlayerPedId(), false);
                 for _,v in pairs(GetActivePlayers()) do
