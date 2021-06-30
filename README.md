@@ -28,6 +28,6 @@
 - Push this folder in your resources folder. <br>
 - Then, go to your server.cfg and : <br>
 - ensure aknx_personalmenu <br>
-- ITS IMPOSSIBLE RENAME THIS RESOURCE BECAUSE CRASH SERVER ! <br>
+- ITS IMPOSSIBLE TO RENAME THIS RESOURCE BECAUSE CRASH SERVER ! <br>
 
 <img border="0" src="https://i.imgur.com/4rD81uL.gif">
