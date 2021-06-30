@@ -21,4 +21,13 @@
 - 💻 Le menu est beaucoup plus complet que le krz (société, adminisreation, logs de give / admin etc.., a vous de tester)
 - 💻 Pour tout voir du menu, regardez les vudéos tout en haut.
 
+<h2> ⛏️ How to use / start ? </h2>
+- Download this repo.
+- Open your download, and go to english or french.
+- You have " aknx_personalmenu-main " folder, rename in " aknx_personalmenu ".
+- Push this folder in your resources folder.
+- Then, go to your server.cfg and :
+- ensure aknx_personalmenu
+- ITS IMPOSSIBLE RENAME THIS RESOURCE BECAUSE CRASH SERVER !
+
 <img border="0" src="https://i.imgur.com/4rD81uL.gif">
