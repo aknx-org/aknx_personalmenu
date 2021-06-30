@@ -22,12 +22,12 @@
 - 💻 Pour tout voir du menu, regardez les vudéos tout en haut.
 
 <h2> ⛏️ How to use / start ? </h2>
-- Download this repo.
-- Open your download, and go to english or french.
-- You have " aknx_personalmenu-main " folder, rename in " aknx_personalmenu ".
-- Push this folder in your resources folder.
-- Then, go to your server.cfg and :
-- ensure aknx_personalmenu
-- ITS IMPOSSIBLE RENAME THIS RESOURCE BECAUSE CRASH SERVER !
+- Download this repo. <br>
+- Open your download, and go to english or french. <br>
+- You have " aknx_personalmenu-main " folder, rename in " aknx_personalmenu ". <br>
+- Push this folder in your resources folder. <br>
+- Then, go to your server.cfg and : <br>
+- ensure aknx_personalmenu <br>
+- ITS IMPOSSIBLE RENAME THIS RESOURCE BECAUSE CRASH SERVER ! <br>
 
 <img border="0" src="https://i.imgur.com/4rD81uL.gif">
