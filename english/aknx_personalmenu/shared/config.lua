@@ -1,3 +1,6 @@
+--[[
+    JOIN THIS DISCORD FOR OTHER SCRIPTS : discord.gg/CyWHSYybEF
+]]
 Config = {}
 Traduction = {}
 Config.Notification = {}

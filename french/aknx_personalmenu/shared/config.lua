@@ -1,3 +1,6 @@
+--[[
+    REJOIGNEZ CE DISCORD POUR D'AUTRES SCRIPTS : discord.gg/CyWHSYybEF
+]]
 Config = {}
 Traduction = {}
 Config.Notification = {}
