@@ -9,7 +9,7 @@ Config.Webhooks = {}
 
 Config.GetESX = 'esx:getSharedObject'
 
-Config.YourServerName = "TEST" -- Title of the personal menu
+Config.YourServerName = "AKNX" -- Title of the personal menu
 Config.DescriptionMenu = "MENU PERSONNEL" -- Description of the personal menu
 Config.MenuBannerColor = { -- The color of the banner of the menu, in R,G,B, OPACITY, check this website --> https://htmlcolorcodes.com/fr/
     r = 0, -- red
