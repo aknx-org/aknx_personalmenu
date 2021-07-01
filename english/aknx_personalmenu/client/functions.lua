@@ -8,7 +8,7 @@ end
 
 RefreshMoney2 = function()
 	if ESX.PlayerData.job2 ~= nil and ESX.PlayerData.job2.grade_name == 'boss' then
-		ESX.TriggerServerCallback('esx_society2:getSocietyMoney', function(money)
+		ESX.TriggerServerCallback('esx_society:getSocietyMoney', function(money)
 			societymoney2 = ESX.Math.GroupDigits(money);
 		end, ESX.PlayerData.job2.name);
 	end
