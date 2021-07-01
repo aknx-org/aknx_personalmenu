@@ -36,3 +36,5 @@ server_scripts {
     -- ↓ PersonalMenu Server ↓
     'server/server.lua'
 }
+
+dependency 'jsfour-idcard'
