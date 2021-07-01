@@ -5,6 +5,8 @@ self = {
     black_money       = nil,
     billing_table = {},
     headClothesIndex  = 1,
+    actionsLicenseIndex = 1,
+    actionsLicenseList = { "Regarder mon permis de conduire", "Montrer mon permis de conduire", "Regarder mon permis d\'armes", "Montrer mon permis d\'armes" },
     clothesHeadList   = { "Chapeau/Casque", "Masque", "Oreilles", "Lunettes" },
     hightClothesIndex = 1,
     clothesHightList  = { "Haut", "Gilet Par Balles", "Sac", "Bras", "Montre", "Bracelet", "Chaines", "Calques" },
@@ -304,6 +306,49 @@ function openPersonalMenu()
                             end
                         end
                     end)
+                    RageUI.List(Traduction.ActionsLicenseButtonTitle, self.actionsLicenseList, self.actionsLicenseIndex, nil, {}, true, function(_,a,s,i)
+                        self.actionsLicenseIndex = i;
+                        if a then
+                            if i == 1 then
+                                if a then
+                                    PlayerMarker();
+                                end
+                                if s then
+                                    TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(PlayerId()), 'driver');
+                                end
+                            else
+                                if i == 2 then
+                                    if s then
+                                        local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
+                                        if closestDistance ~= -1 and closestDistance <= 3.0 then
+                                            TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(closestPlayer), 'driver');
+                                        else
+                                            ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
+                                        end
+                                    end
+                                else
+                                    if i == 3 then
+                                        TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(PlayerId()), 'weapon');
+                                    else
+                                        if i == 4 then
+                                            if a then
+                                                PlayerMarker();
+                                            end
+                                            if s then
+                                                local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer();
+                                                if closestDistance ~= -1 and closestDistance <= 3.0 then
+                                                    TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(closestPlayer), 'weapon');
+                                                else
+                                                    ESX.ShowNotification(Config.Notification.NoPlayers, true, true, 50);
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end)
+
                     RageUI.Separator(Traduction.WalletMoneySeparatorTitle);
                     RageUI.ButtonWithStyle(Traduction.MoneyCashButtonTitle, nil, {RightLabel = "~g~"..ESX.Math.GroupDigits(ESX.PlayerData.money.."$ ~s~→")}, true, function(_,a,s)
                         if s then 
