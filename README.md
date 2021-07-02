@@ -4,7 +4,7 @@
 - Discord AKNX ORG FOR OTHER SCRIPTS : discord.gg/CyWHSYybEF <br> <br>
 <img border="0" src="https://cdn.discordapp.com/attachments/780131463160397825/859833957889867808/unknown.png">
 <img border="0" src="https://cdn.discordapp.com/attachments/780131463160397825/859834096292462592/unknown.png">
-<img border="0" src="https://cdn.discordapp.com/attachments/780131463160397825/859842836249182268/unknown.png">
+<img border="0" src="https://cdn.discordapp.com/attachments/780131463160397825/860516325930565642/unknown.png">
 
 <h2> 🌐 English </h2>
 
